@@ -1,4 +1,4 @@
-# hello-world
+# WaterlooStudies
 
 ## Project setup
 ```
