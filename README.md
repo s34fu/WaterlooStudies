@@ -1,6 +1,6 @@
 # WaterlooStudies
 
-[![CI](https://github.com/andythsu/WaterlooStudies/workflows/deploy/badge.svg)](https://github.com/andythsu/WaterlooStudies/actions?query=workflow%3Adeploy)
+[![deploy](https://github.com/andythsu/WaterlooStudies/workflows/deploy/badge.svg)](https://github.com/andythsu/WaterlooStudies/actions?query=workflow%3Adeploy)
 
 ## Project setup
 ```
