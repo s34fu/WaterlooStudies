@@ -1,0 +1,20 @@
+name: deploy
+# This workflow is triggered on pushes to the repository.
+on: [push]
+
+# env:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Set up node
+        uses: actions/setup-node@master
+      - name: Installing project dependencies
+        run: |
+          npm install
+      - name: Check lint
+        run: |
+          npm run lint 

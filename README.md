@@ -1,5 +1,6 @@
 # WaterlooStudies
 
+
 ## Project setup
 ```
 npm install
