@@ -11,5 +11,5 @@ export default {
     variant: String,
     msg: String
   }
-}
+};
 </script>

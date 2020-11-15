@@ -1,3 +1,5 @@
 module.exports = {
-    FacultyService: require('./FacultyService')
-}
+    FacultyService: require('./FacultyService'),
+    ProgramService: require('./ProgramService'),
+    CourseService: require('./CourseService')
+};

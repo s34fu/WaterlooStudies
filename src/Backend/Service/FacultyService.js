@@ -1,13 +1,13 @@
+const Enums = require('../Enums');
+
 const getFaculties = async() => {
     return new Promise((resolve) => {
         resolve([
-            "Math",
-            "Engineering",
-            "Arts"
+            Enums.FacultyEnum.ENG
         ]);
     });
 };
 
 module.exports = {
     getFaculties
-}
+};
