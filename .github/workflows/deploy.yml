@@ -21,4 +21,4 @@ jobs:
           npm run lint
       - name: Deploy to github pages on push to master
         if: github.ref == 'refs/heads/master'
-        run: git push https://${{ env.GH_TOKEN }}@github.com/user_name/repo_name.git master:gh-pages
+        run: git push https://${{ env.GH_TOKEN }}@github.com/andythsu/WaterlooStudies.git master:gh-pages
