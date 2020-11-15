@@ -6,7 +6,7 @@ env:
   GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
 jobs:
-  build:
+  build_and_deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -26,4 +26,4 @@ jobs:
           npm run build
           echo "switching directory to /dist"
           cd ./dist
-          git push https://${{ env.GH_TOKEN }}@github.com/andythsu/WaterlooStudies.git master:gh-pages
+          git push -f https://${{ env.GH_TOKEN }}@github.com/andythsu/WaterlooStudies.git master:gh-pages
