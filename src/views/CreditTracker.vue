@@ -28,7 +28,7 @@
             <b-button variant="primary" @click="calculate()">Calculate</b-button>
         </div>
         <hr>
-        <div>
+        <div v-if="userCourses.length > 0">
             <p>You have entered the following courses and their category</p>
             <li v-for="(userCourse, index) in userCourses" :key="index">
                 <span>{{ userCourse.name }}</span> is in <span>{{ userCourse.group }}</span>
