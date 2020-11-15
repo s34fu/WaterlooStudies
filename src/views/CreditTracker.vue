@@ -13,7 +13,7 @@
             <input v-model="userCourse"> falls in <input v-model="userCourseCategory"> <b-button variant="success" @click="addCourse">Add</b-button>
         </div>
         <div>
-            <b-button variant="primary" @click="evaluate()">Evaluate</b-button>
+            <b-button variant="primary" @click="calculate()">Calculate</b-button>
         </div>
         <hr>
         <div>
@@ -55,7 +55,7 @@ export default {
       removeCourse: function(index) {
           this.userCourses.splice(index, 1);
       },
-      evaluate: function() {
+      calculate: function() {
           console.log('user data', {
               faculty: this.userFaculty,
               year: this.userYear,
