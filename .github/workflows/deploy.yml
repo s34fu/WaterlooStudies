@@ -20,14 +20,10 @@ jobs:
         run: |
           npm run lint
       - if: github.ref == 'refs/heads/master'
-        name: Deploy to github pages on push to master
+        name: Deploy to github pages
         run: |
           echo "building dist"
           npm run build
-          echo "switching directory to dist"
-          cd dist
-          git push -f git@github.com:andythsu/WaterlooStudies.git master:gh-pages
-          # echo "cloning the repo"
-          # git clone https://andythsu:${{ env.GH_TOKEN }}@github.com/andythsu/WaterlooStudies.git
-          # echo "building "
-          # git push https://${{ env.GH_TOKEN }}@github.com/andythsu/WaterlooStudies.git master:gh-pages
+          echo "switching directory to /dist"
+          cd ./dist
+          git push https://${{ env.GH_TOKEN }}@github.com/andythsu/WaterlooStudies.git master:gh-pages
