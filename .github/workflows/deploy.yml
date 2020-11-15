@@ -2,7 +2,8 @@ name: deploy
 # This workflow is triggered on pushes to the repository.
 on: [push]
 
-# env:
+env:
+  GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
 jobs:
   build:
@@ -17,4 +18,7 @@ jobs:
           npm install
       - name: Check lint
         run: |
-          npm run lint 
+          npm run lint
+      - name: Deploy to github pages on push to master
+        if: github.ref == 'refs/heads/master'
+        run: git push https://${{ env.GH_TOKEN }}@github.com/user_name/repo_name.git master:gh-pages
