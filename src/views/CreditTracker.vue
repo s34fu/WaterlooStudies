@@ -118,8 +118,7 @@ export default {
 					const extras = diffCourseGroups[Enums.CourseGroupEnum.FREE_RANGE];
 					extras.forEach(extra => {
 						if(extra.total > 0){
-							const acceptables = extra.acceptable;
-							if(acceptables.includes(userCourse.group)){
+							if(extra.acceptable.includes(userCourse.group)){
 								extra.total--;
 							}
 						}
@@ -130,7 +129,7 @@ export default {
 			// reset the display
 			this.coursesNeedToBeFulfilled = [];
 			for(const [key, value] of Object.entries(diffCourseGroups)){
-				if(value == 0) continue;
+				if(value <= 0) continue;
 				if(key == Enums.CourseGroupEnum.FREE_RANGE){
 					const ranges = diffCourseGroups[Enums.CourseGroupEnum.FREE_RANGE];
 					ranges.forEach(range => {
