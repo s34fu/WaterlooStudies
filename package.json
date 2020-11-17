@@ -38,7 +38,8 @@
     },
     "rules": {
       "quotes": [2, "single"],
-      "semi": ["error", "always"]
+      "semi": ["error", "always"],
+      "indent": ["error", "tab"]
     }
   },
   "browserslist": [
