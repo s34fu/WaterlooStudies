@@ -6,10 +6,10 @@
 
 <script>
 export default {
-  name: 'WSButton',
-  props: {
-    variant: String,
-    msg: String
-  }
+	name: 'WSButton',
+	props: {
+		variant: String,
+		msg: String
+	}
 };
 </script>

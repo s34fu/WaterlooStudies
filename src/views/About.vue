@@ -9,9 +9,9 @@
 <script>
 // import WSButton from '@/components/WSButton.vue'
 export default {
-  name: 'About',
-  components: {
-    // WSButton
-  }
+	name: 'About',
+	components: {
+		// WSButton
+	}
 };
 </script>
