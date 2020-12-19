@@ -1,7 +1,8 @@
+import CourseAdvisor from '@/views/CourseAdvisor.vue';
+import CreditTracker from '@/views/CreditTracker.vue';
+import Home from '@/views/Home.vue';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import CreditTracker from '../views/CreditTracker.vue';
-import Home from '../views/Home.vue';
 
 Vue.use(VueRouter);
 
@@ -17,19 +18,24 @@ const routes = [
 		component: CreditTracker
 	},
 	{
-		path: '/about',
-		name: 'About',
-		// route level code-splitting
-		// this generates a separate chunk (about.[hash].js) for this route
-		// which is lazy-loaded when the route is visited.
-		component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
-		children: [
-			{
-				path: '2',
-				component: () => import('../views/About2.vue')
-			}
-		]
-	}
+		path: '/course_advisor',
+		name: 'CourseAdvisor',
+		component: CourseAdvisor
+	},
+	// {
+	// 	path: '/about',
+	// 	name: 'About',
+	// 	// route level code-splitting
+	// 	// this generates a separate chunk (about.[hash].js) for this route
+	// 	// which is lazy-loaded when the route is visited.
+	// 	component: () => import(/* webpackChunkName: "about" */ '../views/About.vue'),
+	// 	children: [
+	// 		{
+	// 			path: '2',
+	// 			component: () => import('../views/About2.vue')
+	// 		}
+	// 	]
+	// }
 ];
 
 const router = new VueRouter({

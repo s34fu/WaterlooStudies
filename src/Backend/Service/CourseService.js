@@ -1,7 +1,7 @@
 const Enums = require('../Enums');
 
-const getAllRequiredCourseGroups = async() => {
-	return new Promise((resolve) => {
+const getAllRequiredCourseGroups = async () => {
+	return new Promise(resolve => {
 		resolve([
 			{
 				programName: Enums.ProgramEnum.MGTE,
@@ -41,7 +41,7 @@ const getAllRequiredCourseGroups = async() => {
 						acceptable: [
 							Enums.CourseGroupEnum.LIST_A,
 							Enums.CourseGroupEnum.LIST_C,
-							Enums.CourseGroupEnum.LIST_D,
+							Enums.CourseGroupEnum.LIST_D
 						]
 					}
 				]

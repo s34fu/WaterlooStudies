@@ -1,61 +1,65 @@
 <template>
-    <div>
-        <div>
-            <p>Select your faculty:</p>
-            <select v-model="userFaculty">
-                <option v-for="faculty in faculties" :key="faculty" :value="faculty">{{ faculty }}</option>
-            </select>
-            <div v-if="isUserFacultyChosen">
-                <p>Select your program:</p>
-                <select v-model="userProgram">
-                    <option v-for="(program, index) in programs" :key="index" :value="program.name">{{ program.name }}</option>
-                </select>
-                <p>Select your enrollment year</p>
-                <select v-model="userYear">
-                    <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
-                </select>
-            </div>
-            <div v-if="isUserProgramChosen">
-                <p>Enter what courses you have taken and which category they fall in</p>
-                <input v-model="userCourse" placeholder="course name"> falls in 
-                <select v-model="userCourseGroup">
-                    <option v-for="(group, index) in courseGroups" :key="index" :value="group"> {{ group }}</option>
-                </select>
-                <b-button variant="success" @click="addCourse">Add</b-button>
-            </div>
-        </div>
-        <div v-if="isUserFacultyChosen && isUserProgramChosen">
-            <b-button variant="primary" @click="calculate()">Calculate</b-button>
-        </div>
-        <div v-if="userCourses.length > 0">
-			<hr>
-            <p>You have entered the following courses and their category</p>
-            <li v-for="(userCourse, index) in userCourses" :key="index">
-                <span>{{ userCourse.name }}</span> is in <span>{{ userCourse.group }}</span>
-                <b-button class="removeCourseButton" variant="danger" @click="removeCourse(index)">X</b-button>
-            </li>
-        </div>
-        <div v-if="showResult">
-            <hr>
-            <div v-if="coursesNeedToBeFulfilled.length > 0">
-            <h3><u>Results</u></h3>
-            <p>You still need to fulfill the following categories to graduate:</p>
-            <li v-for="(record, index) in coursesNeedToBeFulfilled" :key="index">{{ record.total }} course(s) from {{ record.name }}</li>
-            </div>
-            <!-- if no more courses need to be fulfilled -->
-            <div v-if="coursesNeedToBeFulfilled.length <= 0">
-                <p>Congratulations! You have satisfied all required courses to graduate.</p>
-            </div>
-        </div>
-    </div>
+	<div>
+		<div>
+			<p>Select your faculty:</p>
+			<b-form-select v-model="userFaculty" :options="faculties" size="sm"></b-form-select>
+			<div v-if="isUserFacultyChosen">
+				<p>Select your program:</p>
+				<b-form-select v-model="userProgram" :options="programs"></b-form-select>
+				<p>Select your enrollment year</p>
+				<b-form-select v-model="userYear" :options="years"></b-form-select> 
+			</div>
+			<div v-if="isUserProgramChosen">
+				<p>
+					Enter what courses you have taken and which category they fall in
+				</p>
+				<b-input-group size="sm">
+					<b-form-input v-model="userCourse" placeholder="course name"></b-form-input> 
+					<span style="margin: 0 1em">falls in</span> 
+					<b-form-select v-model="userCourseGroup" :options="courseGroups"></b-form-select>
+				</b-input-group>
+				<b-button variant="success" @click="addCourse">Add</b-button>
+			</div>
+		</div>
+		<div v-if="userCourses.length > 0">
+			<hr />
+			<p>You have entered the following courses and their category</p>
+			<li v-for="(userCourse, index) in userCourses" :key="index">
+				<span>{{ userCourse.name }}</span> is in
+				<span>{{ userCourse.group }}</span>
+				<b-button class="removeCourseButton" variant="danger" @click="removeCourse(index)">X</b-button>
+			</li>
+		</div>
+		<div v-if="showResult">
+			<hr />
+			<div v-if="coursesNeedToBeFulfilled.length > 0">
+				<h3><u>Results</u></h3>
+				<p>
+					You still need to fulfill the following categories to graduate:
+				</p>
+				<li v-for="(record, index) in coursesNeedToBeFulfilled" :key="index">{{ record.total }} course(s) from {{ record.name }}</li>
+			</div>
+			<!-- if no more courses need to be fulfilled -->
+			<div v-if="coursesNeedToBeFulfilled.length <= 0">
+				<p>
+					Congratulations! You have satisfied all required courses to graduate.
+				</p>
+			</div>
+			<PieChart :chartData="pieChartData" :chartTitle="pieChartTitle" style="width: 200px; display: inline-block" />
+		</div>
+	</div>
 </template>
 
 <script>
-const { FacultyHandler, ProgramHandler, CourseHandler } = require('../Backend');
-const Enums = require('../Backend/Enums');
+import PieChart from '@/components/PieChart.vue';
+const { FacultyHandler, ProgramHandler, CourseHandler } = require('@/Backend');
+const Enums = require('@/Backend/Enums');
 
 export default {
 	name: 'CreditTrackerPage',
+	components: {
+		PieChart
+	},
 	data() {
 		return {
 			userFaculty: '',
@@ -64,12 +68,15 @@ export default {
 			userProgram: '',
 			faculties: [],
 			programs: [],
-			courseGroups: [], 
+			courseGroups: [],
 			years: ['2016-2017'],
 			userCourses: [],
 			userCourse: '',
 			userCourseGroup: '',
 			coursesNeedToBeFulfilled: [],
+			pieGraphs: [],
+			pieChartData: {},
+			pieChartTitle: '% of electives taken',
 			showResult: false,
 			isUserProgramChosen: false,
 			isUserFacultyChosen: false
@@ -79,8 +86,8 @@ export default {
 		addCourse: function() {
 			const newCourse = this.userCourse;
 			const newCourseGroup = this.userCourseGroup;
-			for(const userCourse of this.userCourses) {
-				if(userCourse.name == newCourse && userCourse.group == newCourseGroup) {
+			for (const userCourse of this.userCourses) {
+				if (userCourse.name == newCourse && userCourse.group == newCourseGroup) {
 					alert(`the pair ${newCourse} in ${newCourseGroup} has already been added`);
 					return;
 				}
@@ -89,57 +96,62 @@ export default {
 				name: this.userCourse,
 				group: this.userCourseGroup
 			});
-			this.userCourse = '',
+			this.userCourse = '';
 			this.userCourseGroup = '';
+			this.calculate();
 		},
 		removeCourse: function(index) {
 			this.userCourses.splice(index, 1);
+			this.calculate();
 		},
 		calculate: async function() {
 			// calculate the diff
 			const requiredCourseGroups = await CourseHandler.getCourseGroupsByProgram(this.userProgram);
+			console.log('required course groups', requiredCourseGroups);
 			let diffCourseGroups = {};
 			requiredCourseGroups.forEach(courseGroup => {
-				if(courseGroup.name == Enums.CourseGroupEnum.FREE_RANGE){
-					if(diffCourseGroups[Enums.CourseGroupEnum.FREE_RANGE]){
+				if (courseGroup.name == Enums.CourseGroupEnum.FREE_RANGE) {
+					if (diffCourseGroups[Enums.CourseGroupEnum.FREE_RANGE]) {
 						diffCourseGroups[Enums.CourseGroupEnum.FREE_RANGE].push(courseGroup);
-					}else{
+					} else {
 						diffCourseGroups[Enums.CourseGroupEnum.FREE_RANGE] = [courseGroup];
 					}
-				}else{
+				} else {
 					diffCourseGroups[courseGroup.name] = courseGroup.total;
 				}
 			});
 
+			console.log('diff course groups:', diffCourseGroups);
+
 			this.userCourses.forEach(userCourse => {
-				if(diffCourseGroups[userCourse.group] && diffCourseGroups[userCourse.group] > 0){
+				if (diffCourseGroups[userCourse.group] && diffCourseGroups[userCourse.group] > 0) {
 					diffCourseGroups[userCourse.group]--;
-				}else{
+				} else {
 					const extras = diffCourseGroups[Enums.CourseGroupEnum.FREE_RANGE];
-					extras.forEach(extra => {
-						if(extra.total > 0){
-							if(extra.acceptable.includes(userCourse.group)){
+					if (extras) {
+						extras.forEach(extra => {
+							if (extra.total > 0 && extra.acceptable.includes(userCourse.group)) {
 								extra.total--;
 							}
-						}
-					});
+						});
+					}
 				}
 			});
 
 			// reset the display
 			this.coursesNeedToBeFulfilled = [];
-			for(const [key, value] of Object.entries(diffCourseGroups)){
-				if(value <= 0) continue;
-				if(key == Enums.CourseGroupEnum.FREE_RANGE){
+			for (const [key, value] of Object.entries(diffCourseGroups)) {
+				if (value <= 0) continue;
+				if (key == Enums.CourseGroupEnum.FREE_RANGE) {
 					const ranges = diffCourseGroups[Enums.CourseGroupEnum.FREE_RANGE];
 					ranges.forEach(range => {
-						if(range.total <= 0) return;
+						if (range.total <= 0) return;
 						this.coursesNeedToBeFulfilled.push({
 							name: range.acceptable.join(' or '),
 							total: range.total
 						});
 					});
-				}else{
+				} else {
 					this.coursesNeedToBeFulfilled.push({
 						name: key,
 						total: value
@@ -147,16 +159,37 @@ export default {
 				}
 			}
 			this.showResult = true;
+			this.generatePieGraph(requiredCourseGroups);
+		},
+		generatePieGraph: function(requiredCourseGroups) {
+			const totalRequired = requiredCourseGroups.reduce((prev, cur) => {
+				return prev + cur.total;
+			}, 0);
+			this.pieChartData = {
+				labels: ['Completed', 'Remaining'],
+				datasets: [
+					{
+						data: [this.userCourses.length, totalRequired - this.userCourses.length],
+						backgroundColor: ['rgb(252, 247, 110)', 'rgb(164, 156, 156)']
+					}
+				]
+			};
 		}
 	},
 	watch: {
 		userFaculty: async function() {
-			this.programs = await ProgramHandler.getProgramsByFaculty(this.userFaculty);
+			this.programs = (await ProgramHandler.getProgramsByFaculty(this.userFaculty)).map(p => {
+				return {
+					...p,
+					// adding properties to display on the list
+					value: p.name,
+					text: p.name
+				};
+			});
 			this.isUserFacultyChosen = true;
-		},    
+		},
 		userProgram: async function() {
-			const courseGroupsByProgram = await CourseHandler.getUniqueCourseGroupsByProgram(this.userProgram);
-			this.courseGroups = courseGroupsByProgram;
+			this.courseGroups = await CourseHandler.getUniqueCourseGroupsByProgram(this.userProgram);
 			this.isUserProgramChosen = true;
 		}
 	},
@@ -168,11 +201,11 @@ export default {
 
 <style scoped>
 .removeCourseButton {
-    padding: 0.05rem 0.3rem;
-    margin-left: 0.6rem;
-    font-size: 0.8rem;
+	padding: 0.05rem 0.3rem;
+	margin-left: 0.6rem;
+	font-size: 0.8rem;
 }
 .centerListItem {
-    display: inline-block;
+	display: inline-block;
 }
 </style>
