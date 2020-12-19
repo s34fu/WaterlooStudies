@@ -1,4 +1,5 @@
 import CourseAdvisor from '@/views/CourseAdvisor.vue';
+import CoursePrereq from '@/views/CoursePrereq.vue';
 import CreditTracker from '@/views/CreditTracker.vue';
 import Home from '@/views/Home.vue';
 import Vue from 'vue';
@@ -22,6 +23,11 @@ const routes = [
 		name: 'CourseAdvisor',
 		component: CourseAdvisor
 	},
+	{
+		path: '/course_prereq',
+		name: 'CoursePreqre',
+		component: CoursePrereq
+	}
 	// {
 	// 	path: '/about',
 	// 	name: 'About',

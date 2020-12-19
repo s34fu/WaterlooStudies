@@ -3,7 +3,8 @@
 		<div id="nav">
 			<router-link to="/">Home</router-link> |
 			<router-link to="/credit_tracker">Credit Tracker</router-link> |
-      <router-link to="/course_advisor">Course Advisor</router-link>
+			<router-link to="/course_advisor">Course Advisor</router-link> |
+			<router-link to="/course_prereq">Course Prerequisite</router-link> |
 		</div>
 		<router-view />
 	</div>
