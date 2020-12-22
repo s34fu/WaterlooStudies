@@ -1,10 +1,8 @@
-const Enums = require('../Enums');
+const { Faculties } = require('../Database');
 
 const getFaculties = async() => {
 	return new Promise((resolve) => {
-		resolve([
-			Enums.FacultyEnum.ENG
-		]);
+		resolve(Faculties);
 	});
 };
 
