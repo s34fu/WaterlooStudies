@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<b-form-input v-model="courseCode" placeholder="ex. MSCI 100"></b-form-input>
-		<p v-if="showCourseName">{{ courseCode }} - {{ courseName }}</p>
+		<p>{{ courseCode }} - {{ courseName }}</p>
 		<div v-if="showTree">
 			<TreeGraph :id="1" :tree="tree"></TreeGraph>
 		</div>
@@ -20,25 +20,26 @@ export default {
 			tree: { text: { name: 'dummy' } },
 			courseCode: '',
 			showTree: false,
-			courseName: '',
-			showCourseName: false
+			courseName: ''
 		};
 	},
 	watch: { 
-		courseCode: async function() {
-			const tempTree = await CourseHandler.getPrereqByCourseCode(this.courseCode);
-			if(tempTree) {
-				this.tree = tempTree;
-				this.showTree = true;
-			}else{
-				this.showTree = false;
+		courseCode: async function(newVal) {
+			if(newVal == ''){
+				this.courseName = '';
+				return;
 			}
-			const tempCourseName = await CourseHandler.getCourseNameByCourseCode(this.courseCode); 
+			const tempCourseName = await CourseHandler.getCourseNameByCourseCode(newVal); 
 			if(tempCourseName){
 				this.courseName = tempCourseName.name;
-				this.showCourseName = true;
+				const tempTree = await CourseHandler.getPrereqByCourseCode(newVal);
+				if(tempTree) {
+					this.tree = tempTree;
+					this.showTree = true;
+				}
 			}else{
-				this.showCourseName = false;
+				this.courseName = 'course doesn\'t exist';
+				this.showTree = false;
 			}
 		}
 	}
