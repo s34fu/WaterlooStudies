@@ -1,12 +1,13 @@
 <template>
-	<div id="app" class="container">
-		<div id="nav">
-			<router-link to="/">Home</router-link> |
-			<router-link to="/credit_tracker">Credit Tracker</router-link> |
-			<router-link to="/course_advisor">Course Advisor</router-link> |
-			<router-link to="/course_prereq">Course Prerequisite</router-link> |
+	<div>
+		<nav class="navbar navbar-light bg-light">
+			<div class="container-fluid">
+				<router-link to="/" class="navbar-brand">WaterlooStudies</router-link>
+			</div>
+		</nav>
+		<div id="app" class="container router-view">
+			<router-view />
 		</div>
-		<router-view />
 	</div>
 </template>
 
@@ -19,16 +20,8 @@
 	text-align: center;
 }
 
-#nav {
-	padding-top: 30px;
+.router-view {
+	margin-top: 1em;
 }
 
-#nav a {
-	font-weight: bold;
-	color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-	color: #42b983;
-}
 </style>

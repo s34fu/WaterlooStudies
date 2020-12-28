@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h1>Course advisor</h1>
+		<h1>Course Advisor</h1>
 	</div>
 </template>
 
