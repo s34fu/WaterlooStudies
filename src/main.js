@@ -1,10 +1,23 @@
-import Vue from 'vue';
+import { library } from '@fortawesome/fontawesome-svg-core';
+import * as AllIcons from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
+import 'bootstrap-vue/dist/bootstrap-vue.css';
 // import './custom.scss'
 import 'bootstrap/dist/css/bootstrap.css';
-import 'bootstrap-vue/dist/bootstrap-vue.css';
+import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
+
+// importing all icons
+for(const key in AllIcons){
+	try {
+		library.add(AllIcons[key]);
+	} catch(e){
+		console.log('ignore unsuccessful import');
+	}
+}
+Vue.component('font-awesome-icon', FontAwesomeIcon);
 
 Vue.config.productionTip = false;
 
