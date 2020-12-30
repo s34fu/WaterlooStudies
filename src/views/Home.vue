@@ -1,43 +1,70 @@
 <template>
-	<div>
-		<h3>WaterlooStudies streamlines the Studies at Waterloo!</h3>
-		<div class="row">
-			<div class="col-sm-4">
-				<router-link to="/credit_tracker" class="card" style="border: none">
-					<div class="card-body">
-						<p>Credit Tracker</p>
-						<font-awesome-icon icon="calculator" class="fa-icon" />
+	<transition appear appear-class="slide-fade-enter" appear-active-class="slide-fade-enter-active">
+		<div>
+			<div class="container">
+				<h3>WaterlooStudies streamlines the Studies at Waterloo!</h3>
+				<div class="row">
+					<div class="col" @load="onLoaded">
+						<img src="../assets/man_with_lightbulb.jpg" alt="lightbulb" style="height: 80%" />
 					</div>
-				</router-link>
+					<div class="col" style="margin-top: 10%">
+						<div class="row">
+							<div class="col">
+								<Menu :route="'credit_tracker'" :faIcon="'calculator'" :toolTip="'Credit Tracker'"/>
+							</div>
+							<div class="col">
+								<Menu :route="'course_advisor'" :faIcon="'lightbulb'" :toolTip="'Course Advisor'" />
+							</div>
+							<div class="col">
+								<Menu :route="'course_prereq'" :faIcon="'book-reader'" :toolTip="'Course Prerequisites'"/>
+							</div>
+						</div>
+						<div style="text-align: left">
+							<p>Avoid the hassle of the Excel credit tracking sheet <font-awesome-icon icon="check-circle" style="color: green" /> </p>
+							<p>Get course suggestions from your interests <font-awesome-icon icon="check-circle" style="color: green" /></p>
+							<p>Get an overview of course prerequisites <font-awesome-icon icon="check-circle" style="color: green" /> </p>
+						</div>
+					</div>
+				</div>
 			</div>
-			<div class="col-sm-4">
-				<router-link to="/course_advisor" class="card" style="border: none">
-					<div class="card-body">
-						<p> Course Advisor </p>
-						<font-awesome-icon icon="lightbulb" class="fa-icon" />
-					</div>
-				</router-link>
-			</div>
-			<div class="col-sm-4">
-				<router-link to="/course_prereq" class="card" style="border: none">
-					<div class="card-body">
-						<p> Course Prerequisite </p>
-						<font-awesome-icon icon="book-reader" class="fa-icon"/>
-					</div>
-				</router-link>
+			<div class="footer">
+				Made with <font-awesome-icon icon="heart" /> by team 17
 			</div>
 		</div>
-	</div>
+	</transition>
 </template>
 
 <script>
+import Menu from '@/components/Menu.vue';
+
 export default {
-	name: 'Home'
+	name: 'Home',
+	components: {
+		Menu
+	},
+	methods: {
+		onLoaded() {
+			console.log('image');
+		}
+	}
 };
 </script>
 
-<style scoped>
-.fa-icon {
-	font-size: 3em;
+<style lang='scss' scoped>
+@import '../custom.scss';
+.footer {
+	bottom: 1px;
+    padding: 0.75rem 1.25rem;
+    background-color: $header-footer-bgColor;
+    border-top: 1px solid rgba(0, 0, 0, 0.125);
+	position: absolute;
+	width: 100%;
+}
+.slide-fade-enter-active {
+  transition: all .6s ease;
+}
+.slide-fade-enter {
+  transform: translateX(5px);
+  opacity: 0;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="container">
 		<div>
 			<p>Select your faculty:</p>
 			<b-form-select v-model="userFaculty" :options="faculties" size="sm"></b-form-select>

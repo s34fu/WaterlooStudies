@@ -1,17 +1,25 @@
 <template>
 	<div>
-		<nav class="navbar navbar-light bg-light">
+		<nav class="navbar navbar-light navbar-bg">
 			<div class="container-fluid">
 				<router-link to="/" class="navbar-brand">WaterlooStudies</router-link>
 			</div>
 		</nav>
-		<div id="app" class="container router-view">
+		<div id="app">
 			<router-view />
 		</div>
 	</div>
 </template>
 
-<style>
+<style lang="scss">
+@import './custom.scss';
+html, body {
+	height: 100%;
+	width: 100%;
+}
+body {
+	background-color: $themeColor
+}
 #app {
 	font-family: Avenir, Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
@@ -19,9 +27,7 @@
 	color: #2c3e50;
 	text-align: center;
 }
-
-.router-view {
-	margin-top: 1em;
+.navbar-bg {
+	background-color: $header-footer-bgColor
 }
-
 </style>

@@ -1,5 +1,6 @@
 <template>
-	<div>
+	<div class="container">
+		<p>Enter your course code</p>
 		<b-form-input v-model="courseCode" placeholder="ex. MSCI 100"></b-form-input>
 		<p>{{ courseCode }} - {{ courseName }}</p>
 		<div v-if="showTree">

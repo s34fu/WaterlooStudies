@@ -3,10 +3,10 @@ import * as AllIcons from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
-// import './custom.scss'
 import 'bootstrap/dist/css/bootstrap.css';
 import Vue from 'vue';
 import App from './App.vue';
+import './custom.scss';
 import router from './router';
 
 // importing all icons
