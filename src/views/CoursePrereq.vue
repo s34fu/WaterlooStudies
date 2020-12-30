@@ -1,8 +1,8 @@
 <template>
 	<div class="container">
 		<p>Enter your course code</p>
-		<b-form-input v-model="courseCode" placeholder="ex. MSCI 100"></b-form-input>
-		<p>{{ courseCode }} - {{ courseName }}</p>
+		<b-form-input v-model="courseCode" placeholder="ex. MSCI 100" style="text-transform: uppercase"></b-form-input>
+		<p>{{ capitalize(courseCode) }} - {{ courseName }}</p>
 		<div v-if="showTree">
 			<TreeGraph :id="1" :tree="tree"></TreeGraph>
 		</div>
@@ -24,8 +24,19 @@ export default {
 			courseName: ''
 		};
 	},
+	methods: {
+		capitalize: function(val){
+			if(!val) return;
+			let rtn = '';
+			for(const c of val){
+				rtn += c.toUpperCase();
+			}
+			return rtn;
+		}
+	},
 	watch: { 
 		courseCode: async function(newVal) {
+			newVal = this.capitalize(newVal);
 			if(newVal == ''){
 				this.courseName = '';
 				return;
