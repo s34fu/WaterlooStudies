@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="'/'+route" class="card" style="border: none">
+    <router-link :to="route" class="card" style="border: none">
         <div class="card-body" v-b-tooltip.hover :title="toolTip">
             <font-awesome-icon :icon="faIcon" class="fa-icon" />
 		</div>

@@ -2,9 +2,29 @@
 	<div>
 		<nav class="navbar navbar-light navbar-bg">
 			<div class="container-fluid">
-				<router-link to="/" class="navbar-brand">WaterlooStudies</router-link>
+				<b-button v-b-toggle.sidebar><font-awesome-icon icon="bars" /></b-button>
+				<router-link to="/" class="navbar-brand" style="float: left">WaterlooStudies</router-link>
 			</div>
 		</nav>
+		<b-sidebar id="sidebar" title="WaterlooStudies" shadow>
+			<div class="px-3 py-2">
+				<router-link to="/credit_tracker" class="sidebar-item">
+					<p>
+						<font-awesome-icon icon="calculator" /><span class="sidebar-item-text">Course Tracker</span>
+					</p>
+				</router-link>
+				<router-link to="/course_advisor" class="sidebar-item">
+					<p>
+						<font-awesome-icon icon="lightbulb" /><span class="sidebar-item-text">Course Advisor</span>
+					</p>
+				</router-link>
+				<router-link to="/course_prereq" class="sidebar-item">
+					<p>
+						<font-awesome-icon icon="book-reader" /><span class="sidebar-item-text">Course Prerequisites</span>
+					</p>
+				</router-link>
+			</div>
+		</b-sidebar>
 		<div id="app">
 			<router-view />
 		</div>
@@ -29,5 +49,17 @@ body {
 }
 .navbar-bg {
 	background-color: $header-footer-bgColor
+}
+.sidebar-item {
+	font-size: 1.2rem;
+	color: black;
+}
+
+.sidebar-item:hover { 
+	text-decoration: none !important;
+}
+
+.sidebar-item-text {
+	padding-left: 1em;
 }
 </style>

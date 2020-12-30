@@ -10,13 +10,13 @@
 					<div class="col" style="margin-top: 10%">
 						<div class="row">
 							<div class="col">
-								<Menu :route="'credit_tracker'" :faIcon="'calculator'" :toolTip="'Credit Tracker'"/>
+								<Menu :route="'/credit_tracker'" :faIcon="'calculator'" :toolTip="'Credit Tracker'"/>
 							</div>
 							<div class="col">
-								<Menu :route="'course_advisor'" :faIcon="'lightbulb'" :toolTip="'Course Advisor'" />
+								<Menu :route="'/course_advisor'" :faIcon="'lightbulb'" :toolTip="'Course Advisor'" />
 							</div>
 							<div class="col">
-								<Menu :route="'course_prereq'" :faIcon="'book-reader'" :toolTip="'Course Prerequisites'"/>
+								<Menu :route="'/course_prereq'" :faIcon="'book-reader'" :toolTip="'Course Prerequisites'"/>
 							</div>
 						</div>
 						<div style="text-align: left">
