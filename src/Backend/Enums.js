@@ -2,7 +2,8 @@ const ProgramEnum = {
 	MGTE: 'Management Engineering',
 	CHE: 'Chemical Engineering',
 	CIVE:'Civil Engineering',
-	CE:'Computer Engineering'
+	CE:'Computer Engineering',
+	ME:'Mechanical Engineering'
 };
 
 const FacultyEnum = {

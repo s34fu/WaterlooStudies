@@ -111,7 +111,29 @@ module.exports = [
 					Enums.CourseGroupEnum.TECH_LIST_D
 				]
 			},	
+			
 
+		]
+	},
+	{
+		programName: Enums.ProgramEnum.ME,
+		courseGroups: [
+			{
+				name: Enums.CourseGroupEnum.CSE_LIST_A,
+				total: 1
+			},		
+			{
+				name: Enums.CourseGroupEnum.CSE_LIST_B,
+				total: 1
+			},					
+			{
+				name: Enums.CourseGroupEnum.CSE_LIST_C,
+				total: 2
+			},
+			{
+				name: Enums.CourseGroupEnum.FREE_ELEC,
+				total: 1
+			}
 		]
 	}
 
