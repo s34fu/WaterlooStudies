@@ -20,8 +20,11 @@
 							</div>
 						</div>
 						<div style="text-align: left">
-							<p>Avoid the hassle of 111112fsdfsd22the Excel credit tracking sheet <font-awesome-icon icon="check-circle" style="color: green" /> </p>
-							<p>Get course suggestions based on your interests <font-awesome-icon icon="check-circle" style="color: green" /></p>
+
+		
+							<p>Avoid the hassle of the Excel credit tracking sheet <font-awesome-icon icon="check-circle" style="color: green" /> </p>
+							<p>Get course suggestions basedsss on your interests <font-awesome-icon icon="check-circle" style="color: green" /></p>
+
 							<p>Get an overview of course prerequisites <font-awesome-icon icon="check-circle" style="color: green" /> </p>
 						</div>
 					</div>
