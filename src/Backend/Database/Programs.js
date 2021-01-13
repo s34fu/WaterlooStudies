@@ -16,5 +16,9 @@ module.exports = [
 	{
 		faculty: Enums.FacultyEnum.ENG,
 		name: Enums.ProgramEnum.CE
+	},
+	{
+		faculty: Enums.FacultyEnum.ENG,
+		name: Enums.ProgramEnum.ME
 	}
 ];

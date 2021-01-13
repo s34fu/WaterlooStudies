@@ -98,7 +98,7 @@ module.exports = [
 				total: 2
 			},
 			{
-				name: Enums.CourseGroupEnum.Ethics,
+				name: Enums.CourseGroupEnum.ETHICS,
 				total: 1
 			},
 			{
@@ -136,5 +136,4 @@ module.exports = [
 			}
 		]
 	}
-
 ];

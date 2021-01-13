@@ -1,6 +1,6 @@
 const ProgramEnum = {
-	MGTE: 'Management Engineering',
-	CHE: 'Chemical Engineering',
+	MGTE:'Management Engineering',
+	CHE:'Chemical Engineering',
 	CIVE:'Civil Engineering',
 	CE:'Computer Engineering',
 	ME:'Mechanical Engineering'
@@ -21,7 +21,7 @@ const CourseGroupEnum = {
 	TECH_LIST_C: 'TECH List C',
 	TECH_LIST_D: 'TECH List D',
 	NSE: 'Natural Science Electives',
-	Ethics:'Ethics Requirement',
+	ETHICS:'Ethics Requirement',
 	FREE_ELEC: 'Free Elective',
 	FREE_RANGE: 'Range of Groups'
 };
