@@ -111,8 +111,6 @@ module.exports = [
 					Enums.CourseGroupEnum.TECH_LIST_D
 				]
 			},	
-			
-
 		]
 	},
 	{
