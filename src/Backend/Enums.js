@@ -1,6 +1,9 @@
 const ProgramEnum = {
 	MGTE: 'Management Engineering',
-	CHE: 'Chemical Engineering'
+	CHE: 'Chemical Engineering',
+	CIVE: 'Civil Engineering',
+	CE: 'Computer Engineering',
+	ME: 'Mechanical Engineering'
 };
 
 const FacultyEnum = {
@@ -9,10 +12,16 @@ const FacultyEnum = {
 
 const CourseGroupEnum = {
 	LIST_1: 'List 1',
-	LIST_A: 'CSE List A',
-	LIST_B: 'CSE List B',
-	LIST_C: 'CSE List C',
-	LIST_D: 'CSE List D',
+	CSE_LIST_A: 'CSE List A',
+	CSE_LIST_B: 'CSE List B',
+	CSE_LIST_C: 'CSE List C',
+	CSE_LIST_D: 'CSE List D',
+	TECH_LIST_A: 'TECH List A',
+	TECH_LIST_B: 'TECH List B',
+	TECH_LIST_C: 'TECH List C',
+	TECH_LIST_D: 'TECH List D',
+	NSE: 'Natural Science Electives',
+	ETHICS: 'Ethics Requirement',
 	FREE_ELEC: 'Free Elective',
 	FREE_RANGE: 'Range of Groups'
 };
