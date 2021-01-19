@@ -37,7 +37,7 @@ export default {
 	watch: { 
 		courseCode: async function(newVal) {
 			newVal = this.capitalize(newVal);
-			if(newVal == ''){
+			if(!newVal){
 				this.courseName = '';
 				return;
 			}

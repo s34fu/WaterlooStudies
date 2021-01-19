@@ -10,7 +10,7 @@
 			<div class="px-3 py-2">
 				<router-link to="/credit_tracker" class="sidebar-item">
 					<p>
-						<font-awesome-icon icon="calculator" /><span class="sidebar-item-text">Course Tracker</span>
+						<font-awesome-icon icon="calculator" /><span class="sidebar-item-text">Credit Tracker</span>
 					</p>
 				</router-link>
 				<router-link to="/course_advisor" class="sidebar-item">

@@ -22,6 +22,18 @@ module.exports = {
 	'MSCI 245': {
 		name: 'Databases and Software Design',
 		labels: []
+	},
+	'MSCI 251': {
+		name: 'Probability and Statistics 1',
+		labels: []
+	},
+	'MSCI 253': {
+		name: 'Probability and Statistics 2',
+		labels: []
+	},
+	'MSCI 334': {
+		name: 'Probability and Statistics 2',
+		labels: []
 	}
     
 };
