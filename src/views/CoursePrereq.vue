@@ -2,7 +2,7 @@
 	<div class="container">
 		<p>Enter your course code</p>
 		<b-form-input v-model="courseCode" placeholder="ex. MSCI 100" style="text-transform: uppercase"></b-form-input>
-		<p>{{ capitalize(courseCode) }} - {{ courseName }}</p>
+		<p>{{ capitalize(courseCode) }} - {{ courseTitle }}</p>
 		<div v-if="showTree">
 			<TreeGraph :id="1" :tree="tree"></TreeGraph>
 		</div>
@@ -21,7 +21,7 @@ export default {
 			tree: { text: { name: 'dummy' } },
 			courseCode: '',
 			showTree: false,
-			courseName: ''
+			courseTitle: ''
 		};
 	},
 	methods: {
@@ -38,19 +38,19 @@ export default {
 		courseCode: async function(newVal) {
 			newVal = this.capitalize(newVal);
 			if(!newVal){
-				this.courseName = '';
+				this.courseTitle = '';
 				return;
 			}
-			const tempCourseName = await CourseHandler.getCourseNameByCourseCode(newVal); 
-			if(tempCourseName){
-				this.courseName = tempCourseName.name;
+			const tempCourseTitle = await CourseHandler.getCourseTitleByCourseCode(newVal); 
+			if(tempCourseTitle){
+				this.courseTitle = tempCourseTitle.title;
 				const tempTree = await CourseHandler.getPrereqByCourseCode(newVal);
 				if(tempTree) {
 					this.tree = tempTree;
 					this.showTree = true;
 				}
 			}else{
-				this.courseName = 'course doesn\'t exist';
+				this.courseTitle = 'course doesn\'t exist';
 				this.showTree = false;
 			}
 		}

@@ -26,13 +26,13 @@ const getCourseGroupsByProgram = async programName => {
 	return courseGroupsByProgram.courseGroups;
 };
 
-const getPrereqByCourseCode = async courseName => {
-	return await CourseService.getPrereqByCourseCode(courseName);
+const getPrereqByCourseCode = async courseCode => {
+	return await CourseService.getPrereqByCourseCode(courseCode);
 };
 
-const getCourseNameByCourseCode = async courseCode => {
+const getCourseTitleByCourseCode = async courseCode => {
 	try {
-		return await CourseService.getCourseNameByCourseCode(courseCode);
+		return await CourseService.getCourseTitleByCourseCode(courseCode);
 	} catch (e) {
 		return null;
 	}
@@ -42,5 +42,5 @@ module.exports = {
 	getUniqueCourseGroupsByProgram,
 	getCourseGroupsByProgram,
 	getPrereqByCourseCode,
-	getCourseNameByCourseCode
+	getCourseTitleByCourseCode
 };

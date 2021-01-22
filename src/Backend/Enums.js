@@ -43,8 +43,13 @@ const CourseGroupEnum = {
 	FREE_RANGE: 'Range of Groups'
 };
 
+const UW_API_PATH = 'https://api.uwaterloo.ca/v2';
+const UW_API_KEY = '80b0fad48576cfe67a4de474ebeea851';
+
 module.exports = {
 	ProgramEnum,
 	FacultyEnum,
-	CourseGroupEnum
+	CourseGroupEnum,
+	UW_API_PATH,
+	UW_API_KEY
 };
