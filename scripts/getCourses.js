@@ -40,7 +40,7 @@ const fs = require('fs');
 	}catch(e){
 		console.error(e);
 	}
-	fs.writeFile('courses.js', JSON.stringify(rtn, null, 4), function (err) {
+	fs.writeFile('Courses.js', JSON.stringify(rtn, null, 4), function (err) {
 		if (err) throw err;
 		console.log('Saved!');
 	});

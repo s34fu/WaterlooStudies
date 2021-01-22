@@ -43,7 +43,7 @@ const fs = require('fs');
 			console.error(error);
 		}
 	}
-	fs.writeFile('prepreq.js', JSON.stringify(rtn, null, 4), function (err) {
+	fs.writeFile('CoursePrereq.js', JSON.stringify(rtn, null, 4), function (err) {
 		if (err) throw err;
 		console.log('Saved!');
 	});

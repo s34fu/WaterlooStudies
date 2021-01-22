@@ -45,6 +45,7 @@
 		"parserOptions": {
 			"parser": "babel-eslint"
 		},
+		"ignorePatterns": ["**/src/Backend/Database/*.js"],
 		"rules": {
 			"quotes": [
 				2,
