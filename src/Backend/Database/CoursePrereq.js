@@ -296,7 +296,7 @@ module.exports = {
 		text: { name: 'MSCI 444' },
 		children: [
 			{
-				text: { name: 'At least 3A Engineering;. Not open to Management Engineering students' }
+				text: { name: 'At least 3A Engineering' }
 			},
 			{
 				text: { name: 'Not open to Software Engineering students or Engineering students in the Software Engineering option' }
