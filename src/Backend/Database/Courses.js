@@ -187,5 +187,4 @@ module.exports = {
 		name: 'Special Topics in Management Engineering Design',
 		labels: []
 	}
-
 };
