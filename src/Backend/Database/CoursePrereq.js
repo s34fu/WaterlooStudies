@@ -102,7 +102,7 @@ module.exports = {
 		text: { name: 'MSCI 331' },
 		children: [
 			{
-				text: { name: 'Not open to students in the Faculty of Mathematics expect for Software Engineering' }
+				text: { name: 'Not open to students in the Faculty of Mathematics except for Software Engineering' }
 			},	
 		]
 	},
