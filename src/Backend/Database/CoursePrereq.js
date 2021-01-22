@@ -71,7 +71,7 @@ module.exports = {
 		text: { name: 'MSCI 261' },
 		children: [
 			{
-				text: { name: 'Engineering students only, not open to Not open to Architectural, Biomedical, Civil, Environmental, Geological, and Systems Design Engineering students.' }
+				text: { name: 'Engineering students only, not open to Not open to Architectural, Biomedical, Civil, Environmental, Geological, and Systems Design Engineering students' }
 			}		
 		]
 	},
@@ -143,7 +143,7 @@ module.exports = {
 				text: { name: 'MSCI 342' }
 			},
 			{
-				text: { name: 'Level at least 3B MGTE' }
+				text: { name: 'at least 3B MGTE' }
 			},
 		]
 	},
@@ -321,7 +321,7 @@ module.exports = {
 				text: { name: 'One of BME 411, CIVE 332, CO 250, ENVE 320/335, MSCI 331, or SYDE 411 ' }
 			},
 			{
-				text: { name: '; Level at least 3A;' }
+				text: { name: 'Level at least 3A' }
 			},
 			{
 				text: { name: 'One of CS 348, ECE 356, MSCI 245 and One of CHE 220, CIVE 224, ECE 316, ENVE 224, MSCI 252 or 253, ME 202, MTE 201, NE 215, STAT 206, 231, 241, SYDE 212' }
@@ -340,7 +340,7 @@ module.exports = {
 		text: { name: 'MSCI 454' },
 		children: [
 			{
-				text: { name: 'One of AE 392, BME 364, CIVE 392, ECE 390, ENVE 392, GEOE 392, MSCI 261, SYDE 262; ' }
+				text: { name: 'One of AE 392, BME 364, CIVE 392, ECE 390, ENVE 392, GEOE 392, MSCI 261, SYDE 262' }
 			},
 			{
 				text: { name: 'Level at least 3A Engineering' }
@@ -400,7 +400,7 @@ module.exports = {
 		text: { name: 'MSCI 555' },
 		children: [
 			{
-				text: { name: 'One of BME 411, CIVE 332, CO 250, ENVE 320/335, MSCI 331, or SYDE 411.' }
+				text: { name: 'One of BME 411, CIVE 332, CO 250, ENVE 320/335, MSCI 331, or SYDE 411' }
 			},
 		]
 	},
