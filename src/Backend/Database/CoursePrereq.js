@@ -71,7 +71,7 @@ module.exports = {
 		text: { name: 'MSCI 261' },
 		children: [
 			{
-				text: { name: 'Engineering students only, not open to Not open to Architectural, Biomedical, Civil, Environmental, Geological, and Systems Design Engineering students' }
+				text: { name: 'Engineering students only, Not open to Architectural, Biomedical, Civil, Environmental, Geological, and Systems Design Engineering students' }
 			}		
 		]
 	},
