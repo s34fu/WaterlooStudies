@@ -18,5 +18,9 @@ module.exports = {
 	'MSCI 240': {
 		name: 'Algorithms and Data Structures',
 		labels: []
-	},    
+	},  
+	'MSCI 245': {	
+		name: 'Databases and Software Design',	
+		labels: []	
+	}  
 };
