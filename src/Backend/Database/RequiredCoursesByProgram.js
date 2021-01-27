@@ -3,6 +3,7 @@ const Enums = require('../Enums');
 module.exports = [
 	{
 		programName: Enums.ProgramEnum.AE,
+		year: Enums.AcademicYearsEnum[1617],
 		courseGroups: [
 			{
 				name: Enums.CourseGroupEnum.CSE_LIST_A,
@@ -28,6 +29,7 @@ module.exports = [
 	},
 	{
 		programName: Enums.ProgramEnum.BME,
+		year: Enums.AcademicYearsEnum[1617],
 		courseGroups: [
 			{
 				name: Enums.CourseGroupEnum.CEAB,
@@ -51,6 +53,7 @@ module.exports = [
 	},
 	{
 		programName: Enums.ProgramEnum.CHE,
+		year: Enums.AcademicYearsEnum[1617],
 		courseGroups: [
 			{
 				name: Enums.CourseGroupEnum.CSE_LIST_A,
@@ -77,6 +80,7 @@ module.exports = [
 	},
 	{
 		programName: Enums.ProgramEnum.CIVE,
+		year: Enums.AcademicYearsEnum[1617],
 		courseGroups: [
 			{
 				name: Enums.CourseGroupEnum.TECH_LIST_A,
@@ -110,6 +114,7 @@ module.exports = [
 	},
 	{
 		programName: Enums.ProgramEnum.CE,
+		year: Enums.AcademicYearsEnum[1617],
 		courseGroups: [
 			{
 				name: Enums.CourseGroupEnum.CSE_LIST_C,
@@ -140,6 +145,7 @@ module.exports = [
 	},
 	{
 		programName: Enums.ProgramEnum.ECE,
+		year: Enums.AcademicYearsEnum[1617],
 		courseGroups: [
 			{
 				name: Enums.CourseGroupEnum.CSE_LIST_C,
@@ -170,6 +176,7 @@ module.exports = [
 	},
 	{
 		programName: Enums.ProgramEnum.ENVE,
+		year: Enums.AcademicYearsEnum[1617],
 		courseGroups: [
 			{
 				name: Enums.CourseGroupEnum.CSE_LIST_C,
@@ -191,6 +198,7 @@ module.exports = [
 	},
 	{
 		programName: Enums.ProgramEnum.GEOE,
+		year: Enums.AcademicYearsEnum[1617],
 		courseGroups: [
 			{
 				name: Enums.CourseGroupEnum.CSE_LIST_A,
@@ -208,6 +216,7 @@ module.exports = [
 	},
 	{
 		programName: Enums.ProgramEnum.MGTE,
+		year: 'Enums.AcademicYearsEnum[1617]',
 		courseGroups: [
 			{
 				name: Enums.CourseGroupEnum.LIST_1,
@@ -225,6 +234,7 @@ module.exports = [
 	},
 	{
 		programName: Enums.ProgramEnum.ME,
+		year: Enums.AcademicYearsEnum[1617],
 		courseGroups: [
 			{
 				name: Enums.CourseGroupEnum.CSE_LIST_A,
@@ -250,6 +260,7 @@ module.exports = [
 	},
 	{
 		programName: Enums.ProgramEnum.MTE,
+		year: Enums.AcademicYearsEnum[1617],
 		courseGroups: [
 			{
 				name: Enums.CourseGroupEnum.TE,
@@ -259,6 +270,7 @@ module.exports = [
 	},
 	{
 		programName: Enums.ProgramEnum.NE,
+		year: Enums.AcademicYearsEnum[1617],
 		courseGroups: [
 			{
 				name: Enums.CourseGroupEnum.TE,
@@ -268,6 +280,7 @@ module.exports = [
 	},
 	{
 		programName: Enums.ProgramEnum.SE,
+		year: Enums.AcademicYearsEnum[1617],
 		courseGroups: [
 			{
 				name: Enums.CourseGroupEnum.CSLIST,
@@ -305,6 +318,7 @@ module.exports = [
 	},
 	{
 		programName: Enums.ProgramEnum.SYDE,
+		year: Enums.AcademicYearsEnum[1617],
 		courseGroups: [
 			{
 				name: Enums.CourseGroupEnum.CEAB,

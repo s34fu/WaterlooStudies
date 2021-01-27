@@ -1,7 +1,7 @@
-const { RequiredCoursesByFaculty, CoursePrereq, Courses } = require('../Database');
+const { RequiredCoursesByProgram, CoursePrereq, Courses } = require('../Database');
 
 const getAllRequiredCourseGroups = async () => {
-	return new Promise(resolve => resolve(RequiredCoursesByFaculty));
+	return new Promise(resolve => resolve(RequiredCoursesByProgram));
 };
 
 const getPrereqByCourseCode = async(courseCode) => {

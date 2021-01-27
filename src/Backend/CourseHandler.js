@@ -1,8 +1,8 @@
 const { CourseService } = require('./Service');
 const Enums = require('./Enums');
 
-const getUniqueCourseGroupsByProgram = async programName => {
-	const courseGroups = await getCourseGroupsByProgram(programName);
+const getUniqueCourseGroupsByProgram = async (programName, year) => {
+	const courseGroups = await getCourseGroupsByProgram(programName, year);
 	let uniqueGroups = [];
 	courseGroups.forEach(group => {
 		if (group.name == Enums.CourseGroupEnum.FREE_RANGE) {
@@ -20,10 +20,14 @@ const getUniqueCourseGroupsByProgram = async programName => {
 	return uniqueGroups;
 };
 
-const getCourseGroupsByProgram = async programName => {
+const getCourseGroupsByProgram = async (programName, year) => {
 	const courseGroups = await CourseService.getAllRequiredCourseGroups();
-	const courseGroupsByProgram = courseGroups.filter(courseGroup => courseGroup.programName == programName)[0];
-	return courseGroupsByProgram.courseGroups;
+	const courseGroupsByProgram = courseGroups.filter(courseGroup => courseGroup.programName == programName && courseGroup.year == year)[0];
+	if(!courseGroupsByProgram){
+		throw new Error(`couldn't find data for ${programName} for academic year ${year}`);
+	}else{
+		return courseGroupsByProgram.courseGroups;
+	}
 };
 
 const getPrereqByCourseCode = async courseCode => {
