@@ -216,7 +216,7 @@ module.exports = [
 	},
 	{
 		programName: Enums.ProgramEnum.MGTE,
-		year: 'Enums.AcademicYearsEnum[1617]',
+		year: Enums.AcademicYearsEnum[1617],
 		courseGroups: [
 			{
 				name: Enums.CourseGroupEnum.LIST_1,
