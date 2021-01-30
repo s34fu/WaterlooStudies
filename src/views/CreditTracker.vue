@@ -3,13 +3,13 @@
 		<div>
 			<p>Select your faculty:</p>
 			<b-form-select v-model="userFaculty" :options="faculties" size="sm"></b-form-select>
-			<div v-if="isUserFacultyChosen">
+			<div v-if="allowProgramSelection">
 				<p>Select your program:</p>
 				<b-form-select v-model="userProgram" :options="programs"></b-form-select>
 				<p>Select your enrollment year</p>
-				<b-form-select v-model="userYear" :options="years"></b-form-select> 
+				<b-form-select v-model="userYear" :options="academicYears"></b-form-select> 
 			</div>
-			<div v-if="isUserProgramChosen">
+			<div v-if="allowCourseSelection">
 				<p>
 					Enter what courses you have taken and which category they fall in
 				</p>
@@ -53,6 +53,7 @@
 <script>
 import PieChart from '@/components/PieChart.vue';
 const { FacultyHandler, ProgramHandler, CourseHandler } = require('@/Backend');
+const { AcademicYears } = require('@/Backend/Database');
 const Enums = require('@/Backend/Enums');
 
 export default {
@@ -69,7 +70,7 @@ export default {
 			faculties: [],
 			programs: [],
 			courseGroups: [],
-			years: ['2016-2017'],
+			academicYears: {},
 			userCourses: [],
 			userCourse: '',
 			userCourseGroup: '',
@@ -78,8 +79,8 @@ export default {
 			pieChartData: {},
 			pieChartTitle: '% of electives taken',
 			showResult: false,
-			isUserProgramChosen: false,
-			isUserFacultyChosen: false
+			allowCourseSelection: false,
+			allowProgramSelection: false
 		};
 	},
 	methods: {
@@ -106,7 +107,7 @@ export default {
 		},
 		calculate: async function() {
 			// calculate the diff
-			const requiredCourseGroups = await CourseHandler.getCourseGroupsByProgram(this.userProgram);
+			const requiredCourseGroups = await CourseHandler.getCourseGroupsByProgram(this.userProgram, this.userYear);
 			console.log('required course groups', requiredCourseGroups);
 			let diffCourseGroups = {};
 			requiredCourseGroups.forEach(courseGroup => {
@@ -174,6 +175,16 @@ export default {
 					}
 				]
 			};
+		},
+		getCourseGroups: async function() {
+			try {
+				if(this.userProgram == '' || this.userYear == '') return;
+				this.courseGroups = await CourseHandler.getUniqueCourseGroupsByProgram(this.userProgram, this.userYear);
+				this.allowCourseSelection = true;
+			}catch(e){
+				alert(e.message);
+				this.allowCourseSelection = false;
+			}
 		}
 	},
 	watch: {
@@ -186,15 +197,23 @@ export default {
 					text: p.name
 				};
 			});
-			this.isUserFacultyChosen = true;
+			this.allowProgramSelection = true;
+		},
+		userYear: async function() {
+			this.getCourseGroups();
 		},
 		userProgram: async function() {
-			this.courseGroups = await CourseHandler.getUniqueCourseGroupsByProgram(this.userProgram);
-			this.isUserProgramChosen = true;
+			this.getCourseGroups();
 		}
 	},
 	async created() {
 		this.faculties = await FacultyHandler.getFaculties();
+		this.academicYears = AcademicYears.map(y => { 
+			return {
+				value: y.name,
+				text: y.name
+			};
+		});
 	}
 };
 </script>
