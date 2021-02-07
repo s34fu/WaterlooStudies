@@ -42,9 +42,22 @@ const getCourseTitleByCourseCode = async courseCode => {
 	}
 };
 
+const getAllCourses = async() => {
+	const rawCourses = await CourseService.getAllCourses();
+	let rtn = [];
+	for(const code in rawCourses){
+		rtn.push({
+			code: code,
+			title: rawCourses[code].title
+		});
+	}
+	return rtn;
+};
+
 module.exports = {
 	getUniqueCourseGroupsByProgram,
 	getCourseGroupsByProgram,
 	getPrereqByCourseCode,
-	getCourseTitleByCourseCode
+	getCourseTitleByCourseCode,
+	getAllCourses
 };

@@ -32,8 +32,13 @@ const getCourseTitleByCourseCode = async(courseCode) => {
 	return new Promise(resolve => resolve(Courses[courseCode]));
 };
 
+const getAllCourses = async() => {
+	return new Promise(resolve => resolve(Courses));
+};
+
 module.exports = {
 	getAllRequiredCourseGroups,
 	getPrereqByCourseCode,
-	getCourseTitleByCourseCode
+	getCourseTitleByCourseCode,
+	getAllCourses
 };

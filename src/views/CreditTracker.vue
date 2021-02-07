@@ -14,7 +14,10 @@
 					Enter what courses you have taken and which category they fall in
 				</p>
 				<b-input-group size="sm">
-					<b-form-input v-model="userCourse" placeholder="course name"></b-form-input> 
+					<b-form-input v-model="userCourse" placeholder="course name" list="availCoursesList"></b-form-input> 
+					<datalist id="availCoursesList">
+						<option v-for="(data, index) in availCourses" :key="index">{{ data.code }} - {{ data.title }}</option>
+					</datalist>
 					<span style="margin: 0 1em">falls in</span> 
 					<b-form-select v-model="userCourseGroup" :options="courseGroups"></b-form-select>
 				</b-input-group>
@@ -71,6 +74,7 @@ export default {
 			programs: [],
 			courseGroups: [],
 			academicYears: {},
+			availCourses: [],
 			userCourses: [],
 			userCourse: '',
 			userCourseGroup: '',
@@ -214,6 +218,8 @@ export default {
 				text: y.name
 			};
 		});
+		this.availCourses = await CourseHandler.getAllCourses();
+		console.log(this.availCourses);
 	}
 };
 </script>
