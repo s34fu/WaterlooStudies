@@ -11,7 +11,8 @@
 
 <script>
 import TreeGraph from '@/components/TreeGraph.vue';
-const { CourseHandler } = require('../Backend');
+const { CourseHandler } = require('@/Backend');
+const { CacheService } = require('@/Backend/Service');
 export default {
 	components: {
 		TreeGraph
@@ -28,10 +29,16 @@ export default {
 		capitalize: function(val){
 			if(!val) return;
 			let rtn = '';
-			for(const c of val){
-				rtn += c.toUpperCase();
-			}
+			for(const c of val) rtn += c.toUpperCase();
 			return rtn;
+		},
+		initCache: function(){
+			// init courseTitle
+			const courseTitle = CacheService.get('courseTitle');
+			if(courseTitle) this.courseTitle = courseTitle;
+			// init courseCode
+			const courseCode = CacheService.get('courseCode');
+			if(courseCode) this.courseCode = courseCode;
 		}
 	},
 	watch: { 
@@ -53,7 +60,12 @@ export default {
 				this.courseTitle = 'course doesn\'t exist';
 				this.showTree = false;
 			}
+			CacheService.set('courseTitle', this.courseTitle);
+			CacheService.set('courseCode', this.courseCode);
 		}
+	},
+	created() {
+		this.initCache();
 	}
 };
 </script>

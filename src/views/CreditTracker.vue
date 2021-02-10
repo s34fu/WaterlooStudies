@@ -57,6 +57,7 @@
 import PieChart from '@/components/PieChart.vue';
 const { FacultyHandler, ProgramHandler, CourseHandler } = require('@/Backend');
 const { AcademicYears } = require('@/Backend/Database');
+const { CacheService } = require('@/Backend/Service');
 const Enums = require('@/Backend/Enums');
 
 export default {
@@ -68,7 +69,6 @@ export default {
 		return {
 			userFaculty: '',
 			userYear: '',
-			selected: '',
 			userProgram: '',
 			faculties: [],
 			programs: [],
@@ -104,6 +104,7 @@ export default {
 			this.userCourse = '';
 			this.userCourseGroup = '';
 			this.calculate();
+			CacheService.set('userCourses', JSON.stringify(this.userCourses));
 		},
 		removeCourse: function(index) {
 			this.userCourses.splice(index, 1);
@@ -164,6 +165,7 @@ export default {
 				}
 			}
 			this.showResult = true;
+			CacheService.set('showResult', true);
 			this.generatePieGraph(requiredCourseGroups);
 		},
 		generatePieGraph: function(requiredCourseGroups) {
@@ -189,6 +191,25 @@ export default {
 				alert(e.message);
 				this.allowCourseSelection = false;
 			}
+		},
+		initCache: function() {
+			// init faculty
+			const userFaculty = CacheService.get('userFaculty');
+			if(userFaculty) this.userFaculty = userFaculty;
+			// init program
+			const userProgram = CacheService.get('userProgram');
+			if(userProgram) this.userProgram = userProgram;
+			// init year
+			const userYear = CacheService.get('userYear');
+			if(userYear) this.userYear = userYear;
+			const courses = CacheService.get('userCourses');
+			if(courses) this.userCourses = JSON.parse(courses);
+			const showResult = CacheService.get('showResult');
+			if(showResult) this.calculate();
+			const userCourse = CacheService.get('userCourse');
+			if(userCourse) this.userCourse = userCourse;
+			const userCourseGroup = CacheService.get('userCourseGroup');
+			if(userCourseGroup) this.userCourseGroup = userCourseGroup;
 		}
 	},
 	watch: {
@@ -202,12 +223,21 @@ export default {
 				};
 			});
 			this.allowProgramSelection = true;
+			CacheService.set('userFaculty', this.userFaculty);
 		},
-		userYear: async function() {
+		userYear: function() {
 			this.getCourseGroups();
+			CacheService.set('userYear', this.userYear);
 		},
-		userProgram: async function() {
+		userProgram: function() {
 			this.getCourseGroups();
+			CacheService.set('userProgram', this.userProgram);
+		},
+		userCourse: function() {
+			CacheService.set('userCourse', this.userCourse);
+		},
+		userCourseGroup: function() {
+			CacheService.set('userCourseGroup', this.userCourseGroup);
 		}
 	},
 	async created() {
@@ -219,7 +249,7 @@ export default {
 			};
 		});
 		this.availCourses = await CourseHandler.getAllCourses();
-		console.log(this.availCourses);
+		this.initCache();
 	}
 };
 </script>
