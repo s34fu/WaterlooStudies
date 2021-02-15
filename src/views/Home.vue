@@ -13,7 +13,7 @@
 								<Menu :route="'/credit_tracker'" :faIcon="'calculator'" :toolTip="'Credit Tracker'"/>
 							</div>
 							<div class="col">
-								<Menu :route="'/course_advisor'" :faIcon="'lightbulb'" :toolTip="'Course Advisor'" />
+								<Menu :route="'/course_catalog'" :faIcon="'lightbulb'" :toolTip="'Course Catalog'" />
 							</div>
 							<div class="col">
 								<Menu :route="'/course_prereq'" :faIcon="'book-reader'" :toolTip="'Course Prerequisites'"/>
