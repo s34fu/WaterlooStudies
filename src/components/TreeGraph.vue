@@ -1,5 +1,5 @@
 <template>
-  <div class="treant" >
+  <div class="treant">
     <div :id="`tree-${id}`" class="tree-container"></div>
   </div>
 </template>

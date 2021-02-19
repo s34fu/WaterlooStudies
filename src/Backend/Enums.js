@@ -39,12 +39,28 @@ const CourseGroupEnum = {
 	PD: 'Professional Development Courses',
 	CEAB: 'Canadian Engineering Accreditation Board Requirements',
 	ETHICS: 'Ethics Requirement',
+	COMM: 'Communication Skills Requirement',
+	TPM: 'Technical Presentation Milestone',
 	FREE_ELEC: 'Free Elective',
 	FREE_RANGE: 'Range of Groups'
 };
 
+const AcademicYearsEnum = {
+	1617: '2016-2017',
+	1718: '2017-2018',
+	1819: '2018-2019',
+	1920: '2019-2020',
+	2021: '2020-2021'
+};
+
+const UW_API_PATH = 'https://api.uwaterloo.ca/v2';
+const UW_API_KEY = '80b0fad48576cfe67a4de474ebeea851';
+
 module.exports = {
 	ProgramEnum,
 	FacultyEnum,
-	CourseGroupEnum
+	CourseGroupEnum,
+	UW_API_PATH,
+	UW_API_KEY,
+	AcademicYearsEnum
 };

@@ -3,18 +3,21 @@
 		<div>
 			<p>Select your faculty:</p>
 			<b-form-select v-model="userFaculty" :options="faculties" size="sm"></b-form-select>
-			<div v-if="isUserFacultyChosen">
+			<div v-if="allowProgramSelection">
 				<p>Select your program:</p>
 				<b-form-select v-model="userProgram" :options="programs"></b-form-select>
 				<p>Select your enrollment year</p>
-				<b-form-select v-model="userYear" :options="years"></b-form-select> 
+				<b-form-select v-model="userYear" :options="academicYears"></b-form-select> 
 			</div>
-			<div v-if="isUserProgramChosen">
+			<div v-if="allowCourseSelection">
 				<p>
 					Enter what courses you have taken and which category they fall in
 				</p>
 				<b-input-group size="sm">
-					<b-form-input v-model="userCourse" placeholder="course name"></b-form-input> 
+					<b-form-input v-model="userCourse" placeholder="course name" list="availCoursesList"></b-form-input> 
+					<datalist id="availCoursesList">
+						<option v-for="(data, index) in availCourses" :key="index">{{ data.code }} - {{ data.title }}</option>
+					</datalist>
 					<span style="margin: 0 1em">falls in</span> 
 					<b-form-select v-model="userCourseGroup" :options="courseGroups"></b-form-select>
 				</b-input-group>
@@ -53,6 +56,8 @@
 <script>
 import PieChart from '@/components/PieChart.vue';
 const { FacultyHandler, ProgramHandler, CourseHandler } = require('@/Backend');
+const { AcademicYears } = require('@/Backend/Database');
+const { CacheService } = require('@/Backend/Service');
 const Enums = require('@/Backend/Enums');
 
 export default {
@@ -64,12 +69,12 @@ export default {
 		return {
 			userFaculty: '',
 			userYear: '',
-			selected: '',
 			userProgram: '',
 			faculties: [],
 			programs: [],
 			courseGroups: [],
-			years: ['2016-2017'],
+			academicYears: {},
+			availCourses: [],
 			userCourses: [],
 			userCourse: '',
 			userCourseGroup: '',
@@ -78,8 +83,8 @@ export default {
 			pieChartData: {},
 			pieChartTitle: '% of electives taken',
 			showResult: false,
-			isUserProgramChosen: false,
-			isUserFacultyChosen: false
+			allowCourseSelection: false,
+			allowProgramSelection: false
 		};
 	},
 	methods: {
@@ -99,6 +104,7 @@ export default {
 			this.userCourse = '';
 			this.userCourseGroup = '';
 			this.calculate();
+			CacheService.set('userCourses', JSON.stringify(this.userCourses));
 		},
 		removeCourse: function(index) {
 			this.userCourses.splice(index, 1);
@@ -106,7 +112,7 @@ export default {
 		},
 		calculate: async function() {
 			// calculate the diff
-			const requiredCourseGroups = await CourseHandler.getCourseGroupsByProgram(this.userProgram);
+			const requiredCourseGroups = await CourseHandler.getCourseGroupsByProgram(this.userProgram, this.userYear);
 			console.log('required course groups', requiredCourseGroups);
 			let diffCourseGroups = {};
 			requiredCourseGroups.forEach(courseGroup => {
@@ -159,6 +165,7 @@ export default {
 				}
 			}
 			this.showResult = true;
+			CacheService.set('showResult', true);
 			this.generatePieGraph(requiredCourseGroups);
 		},
 		generatePieGraph: function(requiredCourseGroups) {
@@ -174,6 +181,35 @@ export default {
 					}
 				]
 			};
+		},
+		getCourseGroups: async function() {
+			try {
+				if(this.userProgram == '' || this.userYear == '') return;
+				this.courseGroups = await CourseHandler.getUniqueCourseGroupsByProgram(this.userProgram, this.userYear);
+				this.allowCourseSelection = true;
+			}catch(e){
+				alert(e.message);
+				this.allowCourseSelection = false;
+			}
+		},
+		initCache: function() {
+			// init faculty
+			const userFaculty = CacheService.get('userFaculty');
+			if(userFaculty) this.userFaculty = userFaculty;
+			// init program
+			const userProgram = CacheService.get('userProgram');
+			if(userProgram) this.userProgram = userProgram;
+			// init year
+			const userYear = CacheService.get('userYear');
+			if(userYear) this.userYear = userYear;
+			const courses = CacheService.get('userCourses');
+			if(courses) this.userCourses = JSON.parse(courses);
+			const showResult = CacheService.get('showResult');
+			if(showResult) this.calculate();
+			const userCourse = CacheService.get('userCourse');
+			if(userCourse) this.userCourse = userCourse;
+			const userCourseGroup = CacheService.get('userCourseGroup');
+			if(userCourseGroup) this.userCourseGroup = userCourseGroup;
 		}
 	},
 	watch: {
@@ -186,15 +222,34 @@ export default {
 					text: p.name
 				};
 			});
-			this.isUserFacultyChosen = true;
+			this.allowProgramSelection = true;
+			CacheService.set('userFaculty', this.userFaculty);
 		},
-		userProgram: async function() {
-			this.courseGroups = await CourseHandler.getUniqueCourseGroupsByProgram(this.userProgram);
-			this.isUserProgramChosen = true;
+		userYear: function() {
+			this.getCourseGroups();
+			CacheService.set('userYear', this.userYear);
+		},
+		userProgram: function() {
+			this.getCourseGroups();
+			CacheService.set('userProgram', this.userProgram);
+		},
+		userCourse: function() {
+			CacheService.set('userCourse', this.userCourse);
+		},
+		userCourseGroup: function() {
+			CacheService.set('userCourseGroup', this.userCourseGroup);
 		}
 	},
 	async created() {
 		this.faculties = await FacultyHandler.getFaculties();
+		this.academicYears = AcademicYears.map(y => { 
+			return {
+				value: y.name,
+				text: y.name
+			};
+		});
+		this.availCourses = await CourseHandler.getAllCourses();
+		this.initCache();
 	}
 };
 </script>

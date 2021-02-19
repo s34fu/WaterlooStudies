@@ -1,13 +1,13 @@
-const { RequiredCoursesByFaculty, CoursePrereq, Courses } = require('../Database');
+const { RequiredCoursesByProgram, CoursePrereq, Courses } = require('../Database');
 
 const getAllRequiredCourseGroups = async () => {
-	return new Promise(resolve => resolve(RequiredCoursesByFaculty));
+	return new Promise(resolve => resolve(RequiredCoursesByProgram));
 };
 
-const getPrereqByCourseCode = async(courseName) => {
+const getPrereqByCourseCode = async(courseCode) => {
 	let obj = {};
-	if(courseName in CoursePrereq){
-		const course = CoursePrereq[courseName];
+	if(courseCode in CoursePrereq){
+		const course = CoursePrereq[courseCode];
 		// copy only the text part
 		obj.text = course.text;
 		if(course.children){
@@ -28,12 +28,17 @@ const getPrereqByCourseCode = async(courseName) => {
 	return new Promise(resolve => resolve(obj));
 };
 
-const getCourseNameByCourseCode = async(courseCode) => {
+const getCourseTitleByCourseCode = async(courseCode) => {
 	return new Promise(resolve => resolve(Courses[courseCode]));
+};
+
+const getAllCourses = async() => {
+	return new Promise(resolve => resolve(Courses));
 };
 
 module.exports = {
 	getAllRequiredCourseGroups,
 	getPrereqByCourseCode,
-	getCourseNameByCourseCode
+	getCourseTitleByCourseCode,
+	getAllCourses
 };

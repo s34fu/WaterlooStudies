@@ -1,7 +1,8 @@
 module.exports = {
 	Faculties: require('./Faculties.js'),
-	RequiredCoursesByFaculty: require('./RequiredCoursesByFaculty.js'),
+	RequiredCoursesByProgram: require('./RequiredCoursesByProgram.js'),
 	Programs: require('./Programs.js'),
 	CoursePrereq: require('./CoursePrereq.js'),
-	Courses: require('./Courses.js')
+	Courses: require('./Courses.js'),
+	AcademicYears: require('./AcademicYears.js'),
 };
