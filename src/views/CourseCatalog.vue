@@ -7,16 +7,21 @@
 <script>
 export default {
 	name: 'CourseCatalogPage',
+	// all class variables
 	data() {
 		return {
-
+			courseCode: ''
 		};
 	},
+	// all methods to use
 	methods: {
 
 	},
+	// detect variable changes
 	watch: {
+		courseCode: function(){
 
+		}
 	}
 };
 </script>
