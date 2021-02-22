@@ -6,7 +6,7 @@
 		<b-input-group size="sm">
 					<b-form-input v-model="userCourse" placeholder="Course Subject" list="availCoursesList"></b-form-input> 
 					<datalist id="availCoursesList">
-						<option v-for="(data, index) in availCourses" :key="index">{{ data.code }} - {{ data.title }}</option>
+						<option v-for="(data, index) in availSubjects" :key="index">{{data.subjectName}}</option>
 					</datalist>
 
 				</b-input-group>
@@ -17,8 +17,9 @@
 </template>
 
 <script>
-const {  CourseHandler } = require('@/Backend');
+
 const { CacheService } = require('@/Backend/Service');
+const { Subjects } = require('@/Backend/Database');
 export default {
 	name: 'CourseCatalogPage',
 	// all class variables
@@ -27,7 +28,7 @@ export default {
 			courseCode: '',
 
 			userCourse: '',
-			availCourses: [],
+			availSubjects: [],
 		};
 	},
 	// all methods to use
@@ -48,9 +49,16 @@ export default {
 		
 	},
 	async created() {
+		let subjects = [];
+		for (const code in Subjects){
+			subjects.push({
+				'subjectCode': code,
+				'subjectName': Subjects[code]	 
+			});
+
+		}
+		this.availSubjects = subjects;
 		
-		this.availCourses = await CourseHandler.getAllCourses();
-		this.initCache();
 	}
 	
 };
