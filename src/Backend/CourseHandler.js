@@ -54,10 +54,20 @@ const getAllCourses = async() => {
 	return rtn;
 };
 
+const getCoursesBySubjectCode = async subjectCode => {
+	try {
+		return await CourseService.getCoursesBySubjectCode(subjectCode);
+	} catch (e) {
+		console.error(e);
+		return null;
+	}
+};
+
 module.exports = {
 	getUniqueCourseGroupsByProgram,
 	getCourseGroupsByProgram,
 	getPrereqByCourseCode,
 	getCourseTitleByCourseCode,
-	getAllCourses
+	getAllCourses,
+	getCoursesBySubjectCode
 };

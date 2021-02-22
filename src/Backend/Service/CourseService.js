@@ -36,9 +36,19 @@ const getAllCourses = async() => {
 	return new Promise(resolve => resolve(Courses));
 };
 
+const getCoursesBySubjectCode = async(subjectCode) => {
+	let rtn = {};
+	for(const courseKey in Courses){
+		const course = Courses[courseKey];
+		if(course.subjectCode == subjectCode) rtn[courseKey] = course;
+	}
+	return rtn;
+};
+
 module.exports = {
 	getAllRequiredCourseGroups,
 	getPrereqByCourseCode,
 	getCourseTitleByCourseCode,
-	getAllCourses
+	getAllCourses,
+	getCoursesBySubjectCode
 };
