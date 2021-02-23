@@ -18,15 +18,18 @@
 				selectable 
 				:items="courseTableData" 
 				:fields="courseTableFields" 
-				@row-selected="onCourseTableRowSelected">
-				<template #row(selected)="{ rowSelected }">
+				ref="courseTable"
+				@row-clicked="onCourseTableRowClicked">
+				<template #cell(favorite)="{ rowSelected }">
 					<template v-if="rowSelected">
-						<span aria-hidden="true">&check;</span>
-						<span class="sr-only">Selected</span>
+						<span aria-hidden="true">
+							<font-awesome-icon icon="star" class="favoriteIcon" />
+						</span>
+						<span class="sr-only">favorite</span>
 					</template>
 					<template v-else>
 						<span aria-hidden="true">&nbsp;</span>
-						<span class="sr-only">Not selected</span>
+						<span class="sr-only">Not favorite</span>
 					</template>
 				</template>
 			</b-table>
@@ -38,6 +41,7 @@
 <script>
 const { Subjects } = require('@/Backend/Database');
 const { CourseHandler } = require('@/Backend');
+const { CacheService } = require('@/Backend/Service');
 export default {
 	name: 'CourseCatalogPage',
 	// all class variables
@@ -63,17 +67,27 @@ export default {
 					label: 'Course Description',
 				},
 				{
-					label: 'selected',
-					key: 'selected'
+					label: 'favorite',
+					key: 'favorite'
 				}
 			],
-			courseTableData: []
+			courseTableData: [],
+			selectedCourses: []
 		};
 	},
 	// all methods to use
 	methods: {
-		onCourseTableRowSelected: async function(items){
-			console.log(items);
+		onCourseTableRowClicked: async function(item, _, event){
+			const index = this.selectedCourses.findIndex(s => s.courseNumber == item.courseNumber && s.subjectCode == item.subjectCode);
+			// if parent is false, it means we are "selecting"
+			if(event.target.parentElement.ariaSelected === 'false' && index <= -1){
+				// add item to selected courses
+				this.selectedCourses.push(item);
+			}else{
+				// remove the item from selected courses
+				this.selectedCourses.splice(index, 1);
+			}
+			CacheService.set('courseCatalogSelected', JSON.stringify(this.selectedCourses));
 		},
 		showSubjectTable: async function(){
 			const userSubjectCode = this.userSubject.split('-')[0].trim();
@@ -81,9 +95,23 @@ export default {
 			if(!(userSubjectCode in Subjects)){
 				alert(`${userSubjectCode} cannot be found`);
 			}
-			const courseTableData = await CourseHandler.getCoursesBySubjectCode(userSubjectCode);
-			console.log(courseTableData);
-			this.courseTableData = courseTableData;
+			this.courseTableData = await CourseHandler.getCoursesBySubjectCode(userSubjectCode);
+			this.initFavoritedCourses();
+		},
+		// defect: cannot dynamically add to favorite on new page load 
+		initFavoritedCourses: async function(){
+			this.selectedCourses.forEach(course => {
+				this.courseTableData.forEach((data, index) => {
+					if(data.courseNumber == course.courseNumber && data.subjectCode == course.subjectCode){
+						console.log(index);
+						this.$refs.courseTable.selectRow(index);
+					}
+				});
+			});
+		},
+		initCache: async function(){
+			const userSelectedCourses = CacheService.get('courseCatalogSelected');
+			if(userSelectedCourses) this.selectedCourses = JSON.parse(userSelectedCourses);
 		}
 	},
 	// detect variable changes
@@ -98,6 +126,7 @@ export default {
 			});
 		}
 		this.availSubjects = subjects;
+		this.initCache();
 	}
 };
 </script>
@@ -105,5 +134,8 @@ export default {
 <style scoped>
 .margin-top {
 	margin-top: 1em;
+}
+.favoriteIcon {
+	color:#ffff17;
 }
 </style>
