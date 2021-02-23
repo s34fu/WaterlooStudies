@@ -19,6 +19,17 @@
 				:items="courseTableData" 
 				:fields="courseTableFields" 
 				@row-selected="onCourseTableRowSelected">
+				<template #row(selected)="{ rowSelected }">
+					<template v-if="rowSelected">
+						<p>sdfdsfsdf</p>
+						<span aria-hidden="true">&check;</span>
+						<span class="sr-only">Selected</span>
+					</template>
+					<template v-else>
+						<span aria-hidden="true">&nbsp;</span>
+						<span class="sr-only">Not selected</span>
+					</template>
+				</template>
 			</b-table>
 		</div>
 	</div>
@@ -52,6 +63,9 @@ export default {
 					key: 'description',
 					label: 'Course Description',
 				},
+				{
+					label: 'selected'
+				}
 			],
 			courseTableData: []
 		};
