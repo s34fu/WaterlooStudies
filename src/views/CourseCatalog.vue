@@ -118,14 +118,12 @@ export default {
 	watch: {
 	},
 	async created() {
-		let subjects = [];
 		for (const code in Subjects){
-			subjects.push({
+			this.availSubjects.push({
 				'subjectCode': code,
 				'subjectName': Subjects[code]	 
 			});
 		}
-		this.availSubjects = subjects;
 		this.initCache();
 	}
 };
