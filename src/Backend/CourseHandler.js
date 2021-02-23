@@ -56,7 +56,10 @@ const getAllCourses = async() => {
 
 const getCoursesBySubjectCode = async subjectCode => {
 	try {
-		return await CourseService.getCoursesBySubjectCode(subjectCode);
+		const courses = await CourseService.getCoursesBySubjectCode(subjectCode);
+		// sort by course number in ascending order
+		courses.sort((a,b) => parseInt(a.courseNumber) - parseInt(b.courseNumber));
+		return courses;
 	} catch (e) {
 		console.error(e);
 		return null;

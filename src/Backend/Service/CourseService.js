@@ -37,10 +37,10 @@ const getAllCourses = async() => {
 };
 
 const getCoursesBySubjectCode = async(subjectCode) => {
-	let rtn = {};
+	let rtn = [];
 	for(const courseKey in Courses){
 		const course = Courses[courseKey];
-		if(course.subjectCode == subjectCode) rtn[courseKey] = course;
+		if(course.subjectCode == subjectCode) rtn.push(course);
 	}
 	return rtn;
 };

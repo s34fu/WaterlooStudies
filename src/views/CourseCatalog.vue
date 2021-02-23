@@ -9,7 +9,17 @@
 						<option v-for="(data, index) in availSubjects" :key="index">{{ data.subjectCode }} - {{ data.subjectName }}</option>
 					</datalist>
 			</b-input-group>
-			<b-button variant="success" @click="showSubjectTable()">Enter</b-button>
+			<b-button class="margin-top" variant="success" @click="showSubjectTable()">Enter</b-button>
+		</div>
+		<div class="margin-top">
+			<b-table 
+				striped 
+				hover 
+				selectable 
+				:items="courseTableData" 
+				:fields="courseTableFields" 
+				@row-selected="onCourseTableRowSelected">
+			</b-table>
 		</div>
 	</div>
 	
@@ -24,19 +34,42 @@ export default {
 	data() {
 		return {
 			availSubjects: [],
-			userSubject: ''
+			userSubject: '',
+			courseTableFields: [
+				{
+					key: 'subjectName',
+					label: 'Course Subject',
+				},
+				{
+					key: 'subjectCode',
+					label: 'Course Code',
+				},
+				{
+					key: 'courseNumber',
+					label: 'Course Number',
+				},
+				{
+					key: 'description',
+					label: 'Course Description',
+				},
+			],
+			courseTableData: []
 		};
 	},
 	// all methods to use
 	methods: {
+		onCourseTableRowSelected: async function(items){
+			console.log(items);
+		},
 		showSubjectTable: async function(){
 			const userSubjectCode = this.userSubject.split('-')[0].trim();
 			// validate user subject
 			if(!(userSubjectCode in Subjects)){
 				alert(`${userSubjectCode} cannot be found`);
 			}
-			const courses = await CourseHandler.getCoursesBySubjectCode(userSubjectCode);
-			console.log(courses);
+			const courseTableData = await CourseHandler.getCoursesBySubjectCode(userSubjectCode);
+			console.log(courseTableData);
+			this.courseTableData = courseTableData;
 		}
 	},
 	// detect variable changes
@@ -54,3 +87,9 @@ export default {
 	}
 };
 </script>
+
+<style scoped>
+.margin-top {
+	margin-top: 1em;
+}
+</style>
