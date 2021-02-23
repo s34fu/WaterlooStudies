@@ -21,7 +21,6 @@
 				@row-selected="onCourseTableRowSelected">
 				<template #row(selected)="{ rowSelected }">
 					<template v-if="rowSelected">
-						<p>sdfdsfsdf</p>
 						<span aria-hidden="true">&check;</span>
 						<span class="sr-only">Selected</span>
 					</template>
@@ -64,7 +63,8 @@ export default {
 					label: 'Course Description',
 				},
 				{
-					label: 'selected'
+					label: 'selected',
+					key: 'selected'
 				}
 			],
 			courseTableData: []
