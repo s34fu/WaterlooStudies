@@ -134,11 +134,13 @@ const appendSubject = async () => {
 	const parsedData = JSON.parse(Buffer.from(data));
 	for(const key in parsedData){
 		const category = key.split(' ')[0];
+		const number = key.split(' ')[1];
 		// only care about undergrad courses
 		if(category in listOfSubjects){
 			let course = parsedData[key];
 			course.subjectName = listOfSubjects[category];
 			course.subjectCode = category;
+			course.courseNumber = number;
 			rtn[key] = course;
 		}
 	}

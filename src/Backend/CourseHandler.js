@@ -54,10 +54,23 @@ const getAllCourses = async() => {
 	return rtn;
 };
 
+const getCoursesBySubjectCode = async subjectCode => {
+	try {
+		const courses = await CourseService.getCoursesBySubjectCode(subjectCode);
+		// sort by course number in ascending order
+		courses.sort((a,b) => parseInt(a.courseNumber) - parseInt(b.courseNumber));
+		return courses;
+	} catch (e) {
+		console.error(e);
+		return null;
+	}
+};
+
 module.exports = {
 	getUniqueCourseGroupsByProgram,
 	getCourseGroupsByProgram,
 	getPrereqByCourseCode,
 	getCourseTitleByCourseCode,
-	getAllCourses
+	getAllCourses,
+	getCoursesBySubjectCode
 };
