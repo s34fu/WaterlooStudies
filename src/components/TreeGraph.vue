@@ -26,7 +26,6 @@ export default {
 		},
 		onTreeLoaded() {
 			const nodes = this.$el.querySelectorAll('.node');
-			console.log(this.userSelectedCourses);
 			const userSelectedCourseNames = this.userSelectedCourses.map(c => c.name.split('-')[0].trim());
 			nodes.forEach(node => {
 				node.addEventListener('mouseenter', this.onNodeEnter);
