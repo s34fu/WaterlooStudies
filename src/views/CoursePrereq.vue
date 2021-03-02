@@ -2,9 +2,14 @@
 	<div class="container">
 		<p>Enter your course code</p>
 		<b-form-input v-model="courseCode" placeholder="ex. MSCI 100" style="text-transform: uppercase"></b-form-input>
+		<p class="subscript">*Courses will be highlighted red if they are included in Credit Tracker</p>
 		<p>{{ capitalize(courseCode) }} - {{ courseTitle }}</p>
 		<div v-if="showTree">
-			<TreeGraph :id="1" :tree="tree"></TreeGraph>
+			<TreeGraph 
+				:id="1" 
+				:tree="tree" 
+				@onDisplayUserSelectedCourse="onDisplayUserSelectedCourse"
+				:userSelectedCourses="userSelectedCourses"></TreeGraph>
 		</div>
 	</div>
 </template>
@@ -22,10 +27,14 @@ export default {
 			tree: { text: { name: 'dummy' } },
 			courseCode: '',
 			showTree: false,
-			courseTitle: ''
+			courseTitle: '',
+			userSelectedCourses: []
 		};
 	},
 	methods: {
+		onDisplayUserSelectedCourse: function(node){
+			node.classList.add('userSelectedCourse');
+		},
 		capitalize: function(val){
 			if(!val) return;
 			let rtn = '';
@@ -39,6 +48,8 @@ export default {
 			// init courseCode
 			const courseCode = CacheService.get('courseCode');
 			if(courseCode) this.courseCode = courseCode;
+			const userSelectedCourses = CacheService.get('userCourses');
+			if(userSelectedCourses) this.userSelectedCourses = JSON.parse(userSelectedCourses);
 		}
 	},
 	watch: { 
@@ -69,3 +80,9 @@ export default {
 	}
 };
 </script>
+
+<style scoped>
+.subscript {
+	font-size: smaller
+}
+</style>

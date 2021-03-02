@@ -96,9 +96,7 @@ export default {
 				alert(`${userSubjectCode} cannot be found`);
 			}
 			this.courseTableData = await CourseHandler.getCoursesBySubjectCode(userSubjectCode);
-			this.initFavoritedCourses();
 		},
-		// defect: cannot dynamically add to favorite on new page load 
 		initFavoritedCourses: async function(){
 			this.selectedCourses.forEach(course => {
 				this.courseTableData.forEach((data, index) => {
@@ -109,7 +107,7 @@ export default {
 				});
 			});
 		},
-		initCache: async function(){
+		initCache: function(){
 			const userSelectedCourses = CacheService.get('courseCatalogSelected');
 			if(userSelectedCourses) this.selectedCourses = JSON.parse(userSelectedCourses);
 		}
@@ -117,7 +115,7 @@ export default {
 	// detect variable changes
 	watch: {
 	},
-	async created() {
+	created() {
 		for (const code in Subjects){
 			this.availSubjects.push({
 				'subjectCode': code,
@@ -125,6 +123,10 @@ export default {
 			});
 		}
 		this.initCache();
+	},
+	// called after the table re-renders
+	updated: function() {
+		this.initFavoritedCourses();
 	}
 };
 </script>
