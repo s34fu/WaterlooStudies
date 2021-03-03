@@ -91,6 +91,10 @@ export default {
 		addCourse: function() {
 			const newCourse = this.userCourse;
 			const newCourseGroup = this.userCourseGroup;
+			if(newCourse == '' || newCourseGroup == ''){
+				alert('course or group cannot be empty');
+				return;
+			} 
 			for (const userCourse of this.userCourses) {
 				if (userCourse.name == newCourse && userCourse.group == newCourseGroup) {
 					alert(`the pair ${newCourse} in ${newCourseGroup} has already been added`);
