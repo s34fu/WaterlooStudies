@@ -14,8 +14,8 @@ const getCurrentTerm = async () => {
 	}
 };
 
-const getPast5AcademicYearTerms = async () => {
-	return await TermService.getPast5AcademicYearTerms();
+const getNext3AcademicYearTerms = async () => {
+	return await TermService.getNext3AcademicYearTerms();
 };
 
 const getCoursesByTermCodeAndSubjectCode = async (termCode, subjectCode) => {
@@ -32,6 +32,6 @@ const getCoursesByTermCodeAndSubjectCode = async (termCode, subjectCode) => {
 module.exports = {
 	getCurrentTerm,
 	getAllAvailableTerms,
-	getPast5AcademicYearTerms,
+	getNext3AcademicYearTerms,
 	getCoursesByTermCodeAndSubjectCode,
 };

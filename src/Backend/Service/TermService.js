@@ -25,17 +25,21 @@ const getCoursesByTermCodeAndSubjectCode = async (termCode, subjectCode) => {
 	}
 };
 
-const getPast5AcademicYearTerms = async () => {
+const getNext3AcademicYearTerms = async () => {
 	const currentTerm = await getCurrentTerm();
 	const currentTermAAY = currentTerm.associatedAcademicYear; //AAY = associatedAcademicYear
-	const availableAAYs = []; // availableAAYs = [AAY-5 : AAY]
-	for(let i = currentTermAAY - 5; i <= currentTermAAY; i++){
+	const availableAAYs = []; // availableAAYs = [AAY : AAY+3]
+	for(let i = currentTermAAY; i <= currentTermAAY+3; i++){
 		availableAAYs.push(i);
 	}
 	let availableTerms = [];
 	for(const ay of availableAAYs){
-		const term = await getTermForAcademicYear(ay);
-		availableTerms = availableTerms.concat(term);
+		try {
+			const term = await getTermForAcademicYear(ay);
+			availableTerms = availableTerms.concat(term);
+		} catch(e){
+			console.error(e);
+		}
 	}
 	// sort ascending by term name
 	availableTerms.sort((a, b) => b.nameShort.localeCompare(a.nameShort));
@@ -54,5 +58,5 @@ const getTermForAcademicYear = async (academicYear) => {
 module.exports = {
 	getCurrentTerm,
 	getCoursesByTermCodeAndSubjectCode,
-	getPast5AcademicYearTerms
+	getNext3AcademicYearTerms
 };

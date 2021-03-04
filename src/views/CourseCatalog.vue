@@ -12,13 +12,13 @@
 			<p>Enter term name</p>
 			<template>
 				<FadeLoader
-					v-if="past5YearAvailTerms.length <= 0"					
+					v-if="next3AcademicYearTerms.length <= 0"					
 					class="loader"
 				/>
 				<b-input-group v-else size="sm">
 					<b-form-input v-model="userTerm" placeholder="ex: winter 2021" list="past5AvailTermList" @focus="clearUserTerm()"></b-form-input> 
 						<datalist id="past5AvailTermList">
-							<option v-for="(data, index) in past5YearAvailTerms" :key="index">{{data.termCode}} - {{ data.name }}</option>
+							<option v-for="(data, index) in next3AcademicYearTerms" :key="index">{{data.termCode}} - {{ data.name }}</option>
 						</datalist>
 				</b-input-group>
 			</template>
@@ -71,7 +71,7 @@ export default {
 	data() {
 		return {
 			availSubjects: [],
-			past5YearAvailTerms: [],
+			next3AcademicYearTerms: [],
 			userSubject: '',
 			userTerm: '',
 			courseTableFields: [
@@ -161,7 +161,7 @@ export default {
 				'subjectName': Subjects[code]	 
 			});
 		}
-		this.past5YearAvailTerms = await TermHandler.getPast5AcademicYearTerms();
+		this.next3AcademicYearTerms = await TermHandler.getNext3AcademicYearTerms();
 		const currentTerm = await TermHandler.getCurrentTerm();
 		this.userTerm = `${currentTerm.termCode} - ${currentTerm.name}`;
 		this.initCache();
