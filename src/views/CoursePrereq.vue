@@ -1,7 +1,7 @@
 <template>
 	<div class="container">
 		<p>Enter your course code</p>
-		<b-form-input v-model="courseName" placeholder="ex. MSCI 100" list="availCoursesList"></b-form-input> 
+		<b-form-input v-model="courseName" placeholder="ex. MSCI 100" list="availCoursesList" @focus="clearCourseName()"></b-form-input> 
 		<datalist id="availCoursesList">
 			<option v-for="(data, index) in availCourses" :key="index">{{ data.code }} - {{ data.title }}</option>
 		</datalist>
@@ -35,6 +35,9 @@ export default {
 		};
 	},
 	methods: {
+		clearCourseName: function(){
+			this.courseName = '';
+		},
 		onDisplayUserSelectedCourse: function(node){
 			node.classList.add('userSelectedCourse');
 		},

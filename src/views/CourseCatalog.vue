@@ -4,7 +4,7 @@
 		<div>
 			<p>Enter subject name</p>
 			<b-input-group size="sm">
-				<b-form-input v-model="userSubject" placeholder="ex: Management Science" list="availCoursesList"></b-form-input> 
+				<b-form-input v-model="userSubject" placeholder="ex: Management Science" list="availCoursesList" @focus="clearUserSubject()"></b-form-input> 
 					<datalist id="availCoursesList">
 						<option v-for="(data, index) in availSubjects" :key="index">{{ data.subjectCode }} - {{ data.subjectName }}</option>
 					</datalist>
