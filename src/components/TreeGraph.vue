@@ -1,6 +1,6 @@
 <template>
   <div class="treant">
-    <div :id="`tree-${id}`" class="tree-container"></div>
+    <div :id="`tree-${id}`" class="tree-container" style="overflow-x: auto;overflow-y: auto;"></div>
   </div>
 </template>
 <script>

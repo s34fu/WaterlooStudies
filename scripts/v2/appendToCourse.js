@@ -130,7 +130,7 @@ const appendSubject = async () => {
 	
 	let rtn = {};
 
-	const data = await fs.readFile(path.join(__dirname, '..', 'src', 'Backend', 'Database','Courses.js'), 'utf8');
+	const data = await fs.readFile(path.join(__dirname, '..', '..', 'src', 'Backend', 'Database','Courses.js'), 'utf8');
 	const parsedData = JSON.parse(Buffer.from(data));
 	for(const key in parsedData){
 		const category = key.split(' ')[0];

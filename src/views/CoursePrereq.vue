@@ -1,9 +1,11 @@
 <template>
 	<div class="container">
 		<p>Enter your course code</p>
-		<b-form-input v-model="courseCode" placeholder="ex. MSCI 100" style="text-transform: uppercase"></b-form-input>
+		<b-form-input v-model="courseName" placeholder="ex. MSCI 100" list="availCoursesList"></b-form-input> 
+		<datalist id="availCoursesList">
+			<option v-for="(data, index) in availCourses" :key="index">{{ data.code }} - {{ data.title }}</option>
+		</datalist>
 		<p class="subscript">*Courses will be highlighted red if they are included in Credit Tracker</p>
-		<p>{{ capitalize(courseCode) }} - {{ courseTitle }}</p>
 		<div v-if="showTree">
 			<TreeGraph 
 				:id="1" 
@@ -25,10 +27,11 @@ export default {
 	data() {
 		return {
 			tree: { text: { name: 'dummy' } },
-			courseCode: '',
+			courseName: '',
 			showTree: false,
 			courseTitle: '',
-			userSelectedCourses: []
+			userSelectedCourses: [],
+			availCourses: []
 		};
 	},
 	methods: {
@@ -42,41 +45,27 @@ export default {
 			return rtn;
 		},
 		initCache: function(){
-			// init courseTitle
-			const courseTitle = CacheService.get('courseTitle');
-			if(courseTitle) this.courseTitle = courseTitle;
-			// init courseCode
-			const courseCode = CacheService.get('courseCode');
-			if(courseCode) this.courseCode = courseCode;
+			const courseName = CacheService.get('courseName');
+			if(courseName) this.courseName = courseName;
 			const userSelectedCourses = CacheService.get('userCourses');
 			if(userSelectedCourses) this.userSelectedCourses = JSON.parse(userSelectedCourses);
 		}
 	},
 	watch: { 
-		courseCode: async function(newVal) {
-			newVal = this.capitalize(newVal);
-			if(!newVal){
-				this.courseTitle = '';
-				return;
+		courseName: async function(newVal) {
+			const splitCourseName = newVal.split(' - ');
+			const courseCode = splitCourseName[0].trim();
+			const tempTree = await CourseHandler.getPrereqByCourseCode(courseCode);
+			if(tempTree) {
+				this.tree = tempTree;
+				this.showTree = true;
 			}
-			const tempCourseTitle = await CourseHandler.getCourseTitleByCourseCode(newVal); 
-			if(tempCourseTitle){
-				this.courseTitle = tempCourseTitle.title;
-				const tempTree = await CourseHandler.getPrereqByCourseCode(newVal);
-				if(tempTree) {
-					this.tree = tempTree;
-					this.showTree = true;
-				}
-			}else{
-				this.courseTitle = 'course doesn\'t exist';
-				this.showTree = false;
-			}
-			CacheService.set('courseTitle', this.courseTitle);
-			CacheService.set('courseCode', this.courseCode);
+			CacheService.set('courseName', this.courseName);
 		}
 	},
-	created() {
+	async created() {
 		this.initCache();
+		this.availCourses = await CourseHandler.getAllCourses();
 	}
 };
 </script>
