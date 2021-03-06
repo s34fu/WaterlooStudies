@@ -1,4 +1,5 @@
 <template>
+
 	<div class="container">
 		<div>
 			<p>Select your faculty:</p>
@@ -21,7 +22,14 @@
 					<span style="margin: 0 1em">falls in</span> 
 					<b-form-select v-model="userCourseGroup" :options="courseGroups"></b-form-select>
 				</b-input-group>
-				<b-button variant="success" @click="addCourse">Add</b-button>
+				<div>
+					<label style="
+					font-size: 12px;
+					float: center;
+						">Please visit <a href="https://ugradcalendar.uwaterloo.ca/" class="linkified" target="_blank">https://ugradcalendar.uwaterloo.ca/</a> for more info
+					</label>
+				</div>
+				<b-button style="float right;" variant="success" @click="addCourse">Add</b-button> 
 			</div>
 		</div>
 		<div v-if="userCourses.length > 0">
@@ -59,7 +67,6 @@ const { FacultyHandler, ProgramHandler, CourseHandler } = require('@/Backend');
 const { AcademicYears } = require('@/Backend/Database');
 const { CacheService } = require('@/Backend/Service');
 const Enums = require('@/Backend/Enums');
-
 export default {
 	name: 'CreditTrackerPage',
 	components: {
@@ -84,13 +91,18 @@ export default {
 			pieChartTitle: '% of electives taken',
 			showResult: false,
 			allowCourseSelection: false,
-			allowProgramSelection: false
+			allowProgramSelection: false,
+			raw: 'Greetings from https://ugradcalendar.uwaterloo.ca/'
 		};
 	},
 	methods: {
 		addCourse: function() {
 			const newCourse = this.userCourse;
 			const newCourseGroup = this.userCourseGroup;
+			if(newCourse == '' || newCourseGroup == ''){
+				alert('course or group cannot be empty');
+				return;
+			} 
 			for (const userCourse of this.userCourses) {
 				if (userCourse.name == newCourse && userCourse.group == newCourseGroup) {
 					alert(`the pair ${newCourse} in ${newCourseGroup} has already been added`);
@@ -143,7 +155,6 @@ export default {
 					}
 				}
 			});
-
 			// reset the display
 			this.coursesNeedToBeFulfilled = [];
 			for (const [key, value] of Object.entries(diffCourseGroups)) {

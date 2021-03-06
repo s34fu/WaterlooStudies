@@ -4,15 +4,33 @@
 		<div>
 			<p>Enter subject name</p>
 			<b-input-group size="sm">
-				<b-form-input v-model="userSubject" placeholder="ex: Management Science" list="availCoursesList"></b-form-input> 
+				<b-form-input v-model="userSubject" placeholder="ex: Management Science" list="availCoursesList" @focus="clearUserSubject()"></b-form-input> 
 					<datalist id="availCoursesList">
 						<option v-for="(data, index) in availSubjects" :key="index">{{ data.subjectCode }} - {{ data.subjectName }}</option>
 					</datalist>
 			</b-input-group>
+			<p>Enter term name</p>
+			<template>
+				<FadeLoader
+					v-if="next3AcademicYearTerms.length <= 0"					
+					class="loader"
+				/>
+				<b-input-group v-else size="sm">
+					<b-form-input v-model="userTerm" placeholder="ex: winter 2021" list="past5AvailTermList" @focus="clearUserTerm()"></b-form-input> 
+						<datalist id="past5AvailTermList">
+							<option v-for="(data, index) in next3AcademicYearTerms" :key="index">{{data.termCode}} - {{ data.name }}</option>
+						</datalist>
+				</b-input-group>
+			</template>
 			<b-button class="margin-top" variant="success" @click="showSubjectTable()">Enter</b-button>
 		</div>
 		<div class="margin-top">
-			<b-table 
+			<FadeLoader
+				:loading="isLoading"
+				class="loader"
+			/>
+			<b-table
+				v-if="courseTableData != null && courseTableData.length > 0" 
 				striped 
 				hover 
 				selectable 
@@ -33,6 +51,7 @@
 					</template>
 				</template>
 			</b-table>
+			<p v-else>No data available</p>
 		</div>
 	</div>
 	
@@ -40,26 +59,28 @@
 
 <script>
 const { Subjects } = require('@/Backend/Database');
-const { CourseHandler } = require('@/Backend');
+const { TermHandler } = require('@/Backend');
 const { CacheService } = require('@/Backend/Service');
+import { FadeLoader } from '@saeris/vue-spinners';
 export default {
 	name: 'CourseCatalogPage',
+	components: {
+		FadeLoader
+	},
 	// all class variables
 	data() {
 		return {
 			availSubjects: [],
+			next3AcademicYearTerms: [],
 			userSubject: '',
+			userTerm: '',
 			courseTableFields: [
 				{
-					key: 'subjectName',
-					label: 'Course Subject',
-				},
-				{
 					key: 'subjectCode',
-					label: 'Course Code',
+					label: 'Subject Code',
 				},
 				{
-					key: 'courseNumber',
+					key: 'catalogNumber',
 					label: 'Course Number',
 				},
 				{
@@ -72,11 +93,18 @@ export default {
 				}
 			],
 			courseTableData: [],
-			selectedCourses: []
+			selectedCourses: [],
+			isLoading: false
 		};
 	},
 	// all methods to use
 	methods: {
+		clearUserTerm: function(){
+			this.userTerm = '';
+		},
+		clearUserSubject: function(){
+			this.userSubject = '';
+		},
 		onCourseTableRowClicked: async function(item, _, event){
 			const index = this.selectedCourses.findIndex(s => s.courseNumber == item.courseNumber && s.subjectCode == item.subjectCode);
 			// if parent is false, it means we are "selecting"
@@ -90,18 +118,29 @@ export default {
 			CacheService.set('courseCatalogSelected', JSON.stringify(this.selectedCourses));
 		},
 		showSubjectTable: async function(){
+			this.isLoading = true;
 			const userSubjectCode = this.userSubject.split('-')[0].trim();
-			// validate user subject
-			if(!(userSubjectCode in Subjects)){
-				alert(`${userSubjectCode} cannot be found`);
+			const userTerm = this.userTerm.split('-')[0].trim();
+			if(userSubjectCode == '' || userTerm == ''){
+				alert('subject or term cannot be empty');
+				this.isLoading = false;
+				return;
 			}
-			this.courseTableData = await CourseHandler.getCoursesBySubjectCode(userSubjectCode);
+			const courseTableData = await TermHandler.getCoursesByTermCodeAndSubjectCode(userTerm, userSubjectCode);
+			if(courseTableData){
+				this.courseTableData = courseTableData;
+			}else{
+				this.courseTableData = null;
+			}
+			this.isLoading = false;
 		},
 		initFavoritedCourses: async function(){
+			if(!(this.selectedCourses && this.courseTableData)) return;
 			this.selectedCourses.forEach(course => {
 				this.courseTableData.forEach((data, index) => {
-					if(data.courseNumber == course.courseNumber && data.subjectCode == course.subjectCode){
-						console.log(index);
+					if(data.catalogNumber == course.catalogNumber && 
+						data.subjectCode == course.subjectCode && 
+						data.termCode == course.termCode){
 						this.$refs.courseTable.selectRow(index);
 					}
 				});
@@ -115,13 +154,16 @@ export default {
 	// detect variable changes
 	watch: {
 	},
-	created() {
+	async created() {
 		for (const code in Subjects){
 			this.availSubjects.push({
 				'subjectCode': code,
 				'subjectName': Subjects[code]	 
 			});
 		}
+		this.next3AcademicYearTerms = await TermHandler.getNext3AcademicYearTerms();
+		const currentTerm = await TermHandler.getCurrentTerm();
+		this.userTerm = `${currentTerm.termCode} - ${currentTerm.name}`;
 		this.initCache();
 	},
 	// called after the table re-renders
@@ -137,5 +179,8 @@ export default {
 }
 .favoriteIcon {
 	color:#ffff17;
+}
+.loader {
+	margin: 0 auto;
 }
 </style>
