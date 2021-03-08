@@ -88,8 +88,8 @@ export default {
 					label: 'Course Description',
 				},
 				{
-					label: 'favorite',
-					key: 'favorite'
+					key: 'favorite',
+					label: 'Favorite'
 				}
 			],
 			courseTableData: [],
