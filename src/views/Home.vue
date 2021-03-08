@@ -18,6 +18,9 @@
 							<div class="col">
 								<Menu :route="'/course_prereq'" :faIcon="'book-reader'" :toolTip="'Course Prerequisites'"/>
 							</div>
+							<div class="col">
+								<Menu :route="'/favorite_course'" :faIcon="'lightbulb'" :toolTip="'Favorite Course'"/>
+							</div>
 						</div>
 						<div style="text-align: left">
 							<p>Avoid the hassle of the Excel credit tracking sheet <font-awesome-icon icon="check-circle" style="color: green" /> </p>

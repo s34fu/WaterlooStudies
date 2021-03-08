@@ -1,6 +1,7 @@
 import CourseCatalog from '@/views/CourseCatalog.vue';
 import CoursePrereq from '@/views/CoursePrereq.vue';
 import CreditTracker from '@/views/CreditTracker.vue';
+import FavoriteCourse from '@/views/FavoriteCourse.vue';
 import Home from '@/views/Home.vue';
 import Vue from 'vue';
 import VueRouter from 'vue-router';
@@ -27,6 +28,11 @@ const routes = [
 		path: '/course_catalog',
 		name: 'CourseCatalog',
 		component: CourseCatalog
+	},
+	{
+		path: '/favorite_course',
+		name: 'FavoriteCourse',
+		component: FavoriteCourse
 	}
 	// {
 	// 	path: '/about',

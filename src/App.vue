@@ -23,6 +23,11 @@
 						<font-awesome-icon icon="lightbulb" /><span class="sidebar-item-text">Course Catalog</span>
 					</p>
 				</router-link>
+				<router-link to="/favorite_course" class="sidebar-item">
+					<p>
+						<font-awesome-icon icon="lightbulb" /><span class="sidebar-item-text">Favorite Course</span>
+					</p>
+				</router-link>
 			</div>
 		</b-sidebar>
 		<div id="app">
