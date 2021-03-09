@@ -34,6 +34,11 @@ export default {
 				{
 					key: 'description',
 					label: 'Course Description',
+				},
+				{
+					key: 'termName',
+					label: 'Offered Term',
+					sortable: true
 				}
 			],
 			courseTableData: [],
