@@ -26,7 +26,7 @@
 					<label style="
 					font-size: 12px;
 					float: center;
-						">Please visit <a href="https://ugradcalendar.uwaterloo.ca/" class="linkified" target="_blank">https://ugradcalendar.uwaterloo.ca/</a> for more info
+						">Please visit <a href="https://ugradcalendar.uwaterloo.ca/" target="_blank">https://ugradcalendar.uwaterloo.ca/</a> for more info
 					</label>
 				</div>
 				<b-button style="float right;" variant="success" @click="addCourse">Add</b-button> 

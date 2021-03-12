@@ -88,8 +88,8 @@ export default {
 					label: 'Course Description',
 				},
 				{
-					label: 'favorite',
-					key: 'favorite'
+					key: 'favorite',
+					label: 'Favorite'
 				}
 			],
 			courseTableData: [],
@@ -106,7 +106,7 @@ export default {
 			this.userSubject = '';
 		},
 		onCourseTableRowClicked: async function(item, _, event){
-			const index = this.selectedCourses.findIndex(s => s.courseNumber == item.courseNumber && s.subjectCode == item.subjectCode);
+			const index = this.selectedCourses.findIndex(s => s.catalogNumber == item.catalogNumber && s.subjectCode == item.subjectCode);
 			// if parent is false, it means we are "selecting"
 			if(event.target.parentElement.ariaSelected === 'false' && index <= -1){
 				// add item to selected courses
