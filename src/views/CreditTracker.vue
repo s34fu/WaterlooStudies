@@ -23,10 +23,8 @@
 					<b-form-select v-model="userCourseGroup" :options="courseGroups"></b-form-select>
 				</b-input-group>
 				<div>
-					<label style="
-					font-size: 12px;
-					float: center;
-						">Please visit <a href="https://ugradcalendar.uwaterloo.ca/" target="_blank">https://ugradcalendar.uwaterloo.ca/</a> for more info
+					<label style="font-size: 10px; float: center;">
+						Please visit <a href="https://ugradcalendar.uwaterloo.ca/" target="_blank">https://ugradcalendar.uwaterloo.ca/</a> for more info on course categories					
 					</label>
 				</div>
 				<b-button style="float right;" variant="success" @click="addCourse">Add</b-button> 
