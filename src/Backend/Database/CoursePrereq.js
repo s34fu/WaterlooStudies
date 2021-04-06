@@ -33108,7 +33108,7 @@ module.exports = {
 		'children': [
 			{
 				'text': {
-					'name': '(ME 250 or'
+					'name': 'ME 250'
 				}
 			}
 		]
